@@ -50,6 +50,7 @@ initRoutes(app);
  * renderMiddleware matches the URL with react-router and renders the app into
  * HTML
  */
+
 app.get('*', renderMiddleware);
 
 app.listen(app.get('port'));

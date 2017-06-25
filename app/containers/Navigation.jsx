@@ -6,15 +6,25 @@ import classNames from 'classnames/bind';
 import { logOut } from '../actions/users';
 import styles from '../css/components/navigation';
 
+// Material Ui
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+
 const cx = classNames.bind(styles);
 
 const Navigation = ({ user, logOut }) => {
     return (
       <nav className={cx('navigation')} role="navigation">
+
+        <MuiThemeProvider>
+           <AppBar /> 
+        </MuiThemeProvider>
+    
         <Link
           to="/"
           className={cx('item', 'logo')}
-          activeClassName={cx('active')}>Ninja Ocean</Link>
+          activeClassName={cx('active')}>Serious?</Link>
           { user.authenticated ? (
             <Link
               onClick={logOut}
