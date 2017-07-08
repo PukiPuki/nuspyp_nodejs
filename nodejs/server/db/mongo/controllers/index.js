@@ -1,9 +1,11 @@
 import topics from './topics';
 import users from './users';
+import animes from './animes';
 
-export { topics, users };
+export { topics, users, animes };
 
 export default {
   topics,
-  users
+  users,
+  animes
 };

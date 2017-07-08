@@ -7,6 +7,7 @@ import { controllers, passport as passportConfig } from '../db';
 
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
+const animesController = controllers && controllers.animes;
 
 export default (app) => {
   // user routes
@@ -52,4 +53,15 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('topics routes'));
   }
+
+  // anime routes
+  if (animesController) {
+    app.get('/anime', animesController.all);
+    app.post('/anime/:id', animesController.add);
+    app.put('/anime/:id', animesController.update);
+    app.delete('/anime/:id', animesController.remove);
+  } else {
+    console.warn(unsupportedMessage('animes routes'));
+  }
+
 };

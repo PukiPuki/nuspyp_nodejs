@@ -8,9 +8,6 @@ import styles from '../css/components/navigation';
 
 // Material Ui
 import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import AutoComplete from 'material-ui/AutoComplete';
 
 const cx = classNames.bind(styles);
 
@@ -18,10 +15,6 @@ const Navigation = ({ user, logOut }) => {
     return (
       <nav className={cx('navigation')} role="navigation">
 
-        <MuiThemeProvider>
-           <AppBar />
-        </MuiThemeProvider>
-    
         <Link
           to="/"
           className={cx('item', 'logo')}
@@ -35,6 +28,7 @@ const Navigation = ({ user, logOut }) => {
           )}
         <Link className={cx('item')} to="/dashboard">Dashboard</Link>
         <Link to="/about" className={cx('item')} activeClassName={cx('active')}>About</Link>
+        <Link to="/cock" className={cx('item')} activeClassName={cx('active')}>Anime</Link>
       </nav>
     );
 };
