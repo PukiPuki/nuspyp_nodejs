@@ -8,6 +8,9 @@ import * as types from './types';
 import configureStore from './store/configureStore';
 import fetchDataForRoute from './utils/fetchDataForRoute';
 
+// inject material theme
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 // Grab the state from a global injected into
 // server-generated HTML
 const initialState = window.__INITIAL_STATE__;
@@ -43,7 +46,9 @@ function onUpdate() {
 // Read more https://github.com/rackt/react-router/blob/latest/docs/Glossary.md#routeconfig
 render(
   <Provider store={store}>
-    <Router history={history} onUpdate={onUpdate}>
-      {routes}
-    </Router>
+    <MuiThemeProvider>
+      <Router history={history} onUpdate={onUpdate}>
+        {routes}
+      </Router>
+    </MuiThemeProvider>
   </Provider>, document.getElementById('app'));
