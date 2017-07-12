@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
+import {connect} from 'react-redux';
 
 /**
  * The input is used to create the `dataSource`, so the input always matches three entries.
  */
-export default class SearchBar extends Component {
+class SearchBar extends Component {
+	constructor(){
+		super();
+		console.log("Search Modules: ");
+		console.log(this.state);
+		
+	}
   state = {
     dataSource: [],
   };
@@ -30,3 +37,11 @@ export default class SearchBar extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+	return {
+		modules: state
+	}
+}
+
+export default connect(mapStateToProps, {})(SearchBar);

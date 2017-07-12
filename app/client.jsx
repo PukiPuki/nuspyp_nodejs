@@ -36,10 +36,12 @@ function onUpdate() {
   }
 
   store.dispatch({ type: types.CREATE_REQUEST });
+	console.log("Fetch data\n");
   fetchDataForRoute(this.state)
     .then((data) => {
       return store.dispatch({ type: types.REQUEST_SUCCESS, data });
     });
+	console.log(state);
 }
 
 
