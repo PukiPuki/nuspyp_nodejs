@@ -13,6 +13,8 @@ import TextField from 'material-ui/TextField';
 import SearchBar from 'components/SearchBar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
+import { browserHistory } from 'react-router';
+
 const cx = classNames.bind(styles);
 
 
@@ -27,33 +29,35 @@ export default class DrawerUndockedExample extends React.Component {
 
   handleClose = () => this.setState({open: false});
 
+  loginButton() {
+    browserHistory.push('/login');
+  }
+
   render() {
 	const {user, logOut} = this.props;
     return (
       <div>
-        	<Drawer
-        	  docked={false}
-          	width={200}
-          	open={this.state.open}
-          	onRequestChange={(open) => this.setState({open})}
-        	>
-          	<MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
-        	</Drawer>
+        <Drawer
+          docked={false}
+        	width={200}
+        	open={this.state.open}
+        	onRequestChange={(open) => this.setState({open})}>
+        	<MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
+        </Drawer>
 
 				<AppBar
 					title="NUSPYP" 
 					onLeftIconButtonTouchTap={this.handleToggle}> 
 				<ToolbarGroup>
 			
-				<SearchBar />
+				  <SearchBar />
 				</ToolbarGroup>
 				<ToolbarGroup>
 				{ user.authenticated 
 							? (<FlatButton label="Logout" 
 									href="/" onTouchTap={logOut} style={{color: "white"}} />) 
-							: (<FlatButton label="Login" href="/login" style={{color: "white"}}/>)
+							: (<FlatButton label="Login" onClick={this.loginButton.bind(this)} style={{color: "white"}}/>)
 						} 
-
 			</ToolbarGroup>
 			</AppBar>
       </div>
