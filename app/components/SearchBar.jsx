@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 import {connect} from 'react-redux';
+import fetchModuleData from '../fetch-data/fetchModuleData.js';
 
 /**
  * The input is used to create the `dataSource`, so the input always matches three entries.
@@ -8,21 +9,18 @@ import {connect} from 'react-redux';
 class SearchBar extends Component {
 	constructor(){
 		super();
-		console.log("Search Modules: ");
-		console.log(this.state);
 	}
-
-  stateTest() {
-    console.log(this.modules);
-    console.log(this.props);
-  }
 
   render() {
     const { modules } = this.props;
+		const arrCodes = modules.map((module) => {
+			return module.ModuleCode;
+		})
     return (
       <div>
-        <AutoComplete dataSource={modules} />
-        <button onClick={this.stateTest.bind(this)} />
+        <AutoComplete filter={AutoComplete.fuzzyFilter}
+											maxSearchResults={5}
+											dataSource={arrCodes} />
       </div>
     );
   }

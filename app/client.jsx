@@ -9,7 +9,7 @@ import configureStore from './store/configureStore';
 import fetchDataForRoute from './utils/fetchDataForRoute';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import fetchModuleData from './fetch-data/fetchModuleData';
 injectTapEventPlugin();
 
 // Grab the state from a global injected into
@@ -35,18 +35,22 @@ function onUpdate() {
     return;
   }
 
+	fetchModuleData()
+		.then((data) => {
+        return store.dispatch({ type: types.MODULE_REQUEST_SUCCESS, data });
+		});
   store.dispatch({ type: types.CREATE_REQUEST });
   fetchDataForRoute(this.state)
     .then((data) => {
       const path = this.state.location.pathname;
-      switch (path) {
-        case "/login":
+			switch(path){
+        case "/":
           return store.dispatch({ type: types.MODULE_REQUEST_SUCCESS, data });
         case "/":
           return store.dispatch({ type: types.REQUEST_SUCCESS, data});
       }
-    });
-	console.log(this.state);
+		}
+    );
 }
 
 

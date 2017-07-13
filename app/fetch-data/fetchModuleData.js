@@ -1,7 +1,6 @@
 import { moduleService } from '../services';
 
 const fetchData = () => {
-  console.log("fetchdata")
   return moduleService().getModules()
   .then(res => res.data)
   // Returning [] as a placeholder now so it does not error out when this service
