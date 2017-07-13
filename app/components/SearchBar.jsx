@@ -10,37 +10,27 @@ class SearchBar extends Component {
 		super();
 		console.log("Search Modules: ");
 		console.log(this.state);
-		
 	}
-  state = {
-    dataSource: [],
-  };
 
-  handleUpdateInput = (value) => {
-    this.setState({
-      dataSource: [
-        value,
-        value + value,
-        value + value + value,
-      ],
-    });
-  };
+  stateTest() {
+    console.log(this.modules);
+    console.log(this.props);
+  }
 
   render() {
+    const { modules } = this.props;
     return (
-        <AutoComplete
-          hintText="Search"
-          dataSource={this.state.dataSource}
-          onUpdateInput={this.handleUpdateInput}
-        />
-
+      <div>
+        <AutoComplete dataSource={modules} />
+        <button onClick={this.stateTest.bind(this)} />
+      </div>
     );
   }
 }
 
 function mapStateToProps(state) {
 	return {
-		modules: state
+		modules: state.module.modules
 	}
 }
 

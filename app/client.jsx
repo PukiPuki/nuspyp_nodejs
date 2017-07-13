@@ -36,12 +36,17 @@ function onUpdate() {
   }
 
   store.dispatch({ type: types.CREATE_REQUEST });
-	console.log("Fetch data\n");
   fetchDataForRoute(this.state)
     .then((data) => {
-      return store.dispatch({ type: types.REQUEST_SUCCESS, data });
+      const path = this.state.location.pathname;
+      switch (path) {
+        case "/login":
+          return store.dispatch({ type: types.MODULE_REQUEST_SUCCESS, data });
+        case "/":
+          return store.dispatch({ type: types.REQUEST_SUCCESS, data});
+      }
     });
-	console.log(state);
+	console.log(this.state);
 }
 
 

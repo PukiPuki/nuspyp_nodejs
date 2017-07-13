@@ -19,7 +19,6 @@ const cx = classNames.bind(styles);
 
 
 export default class DrawerUndockedExample extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {open: false};
@@ -33,8 +32,12 @@ export default class DrawerUndockedExample extends React.Component {
     browserHistory.push('/login');
   }
 
+  homeButton() {
+    browserHistory.push('/');
+  }
+
   render() {
-	const {user, logOut} = this.props;
+	const {user, logOut, modules} = this.props;
     return (
       <div>
         <Drawer
@@ -50,9 +53,10 @@ export default class DrawerUndockedExample extends React.Component {
 					onLeftIconButtonTouchTap={this.handleToggle}> 
 				<ToolbarGroup>
 			
-				  <SearchBar />
+				  <SearchBar modules={modules} />
 				</ToolbarGroup>
 				<ToolbarGroup>
+			  <FlatButton label="Home" onTouchTap={this.homeButton} style={{color: "white"}} /> 
 				{ user.authenticated 
 							? (<FlatButton label="Logout" 
 									href="/" onTouchTap={logOut} style={{color: "white"}} />) 

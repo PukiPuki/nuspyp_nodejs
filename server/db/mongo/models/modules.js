@@ -8,7 +8,13 @@ const ModuleSchema = new mongoose.Schema({
 	id: String,
   ModuleCode: String,
   ModuleTitle: String,
-  Semesters:  []
+  AcadYear: String,
+  Department: String,
+  ModuleDescription: String,
+  ModuleCredit: String,
+  Workload: String,
+  Preclusion: String,
+  CorsBiddingStats: [{}],
 });
 
 // Compiles the schema into a model, opening (or creating, if

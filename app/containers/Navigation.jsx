@@ -13,10 +13,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const cx = classNames.bind(styles);
 
-const Navigation = ({ user, logOut }) => {
+const Navigation = ({ user, logOut, modules }) => {
     return (
       <nav className={cx('navigation')} role="navigation">
-				<NavBar user={user} logOut={logOut} />
+				<NavBar user={user} logOut={logOut} modules={modules}/>
 			</nav>
     );
 };
@@ -28,7 +28,8 @@ Navigation.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    modules: state.module.modules,
   };
 }
 
