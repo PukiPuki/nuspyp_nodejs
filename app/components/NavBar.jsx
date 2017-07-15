@@ -50,13 +50,13 @@ export default class DrawerUndockedExample extends React.Component {
 
 				<AppBar
 					title="NUSPYP" 
+					onTitleTouchTap={this.homeButton}
 					onLeftIconButtonTouchTap={this.handleToggle}> 
 				<ToolbarGroup>
 			
 				  <SearchBar modules={modules} />
 				</ToolbarGroup>
 				<ToolbarGroup>
-			  <FlatButton label="Home" onTouchTap={this.homeButton} style={{color: "white"}} /> 
 				{ user.authenticated 
 							? (<FlatButton label="Logout" 
 									href="/" onTouchTap={logOut} style={{color: "white"}} />) 
