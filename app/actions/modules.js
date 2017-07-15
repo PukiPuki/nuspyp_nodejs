@@ -16,8 +16,6 @@ export function getModuleRequest() {
   return (dispatch) => {
     moduleService().getModules()
       .then((res) => {
-        console.log("res");
-        console.log(res);
         const mydata = res.data;
         return dispatch({type: types.MODULE_REQUEST_SUCCESS, mydata });
       })
