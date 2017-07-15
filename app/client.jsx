@@ -35,22 +35,11 @@ function onUpdate() {
     return;
   }
 
-	fetchModuleData()
-		.then((data) => {
-        return store.dispatch({ type: types.MODULE_REQUEST_SUCCESS, data });
-		});
-  store.dispatch({ type: types.CREATE_REQUEST });
   fetchDataForRoute(this.state)
     .then((data) => {
-      const path = this.state.location.pathname;
-			switch(path){
-        case "/":
-          return store.dispatch({ type: types.MODULE_REQUEST_SUCCESS, data });
-        case "/":
-          return store.dispatch({ type: types.REQUEST_SUCCESS, data});
-      }
-		}
-    );
+      return store.dispatch({ type: types.REQUEST_SUCCESS, data});
+    }
+	);
 }
 
 

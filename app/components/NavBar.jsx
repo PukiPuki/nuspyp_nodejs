@@ -37,7 +37,7 @@ export default class DrawerUndockedExample extends React.Component {
   }
 
   render() {
-	const {user, logOut, modules} = this.props;
+	const { user, logOut } = this.props;
     return (
       <div>
         <Drawer
@@ -53,7 +53,7 @@ export default class DrawerUndockedExample extends React.Component {
 					onLeftIconButtonTouchTap={this.handleToggle}> 
 				<ToolbarGroup>
 			
-				  <SearchBar modules={modules} />
+				  <SearchBar />
 				</ToolbarGroup>
 				<ToolbarGroup>
 			  <FlatButton label="Home" onTouchTap={this.homeButton} style={{color: "white"}} /> 

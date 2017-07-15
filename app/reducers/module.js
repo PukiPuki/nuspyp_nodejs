@@ -12,8 +12,6 @@ const module = (
         count: action.count,
         text: action.text
       }
-    default:
-      return state;
   }
 }
 
@@ -23,10 +21,7 @@ const modules = (
 ) => {
   switch (action.type) {
     case types.MODULE_REQUEST_SUCCESS:
-      if (action.data) return action.data;
-      console.log("action.data");
-      console.log(action.data);
-      return state;
+      return action.mydata
     default:
       return state;
   }
