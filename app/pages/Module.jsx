@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import Page from '../pages/Page';
 import ModuleContainer from '../containers/Module';
+import { connect } from 'react-redux';
 
 class Module extends Component {
-  getMetaData() {
+
+
+  getMetaData(modCode) {
     return {
-      title: this.pageTitle(),
+      title: this.pageTitle(modCode),
       meta: this.pageMeta(),
       link: this.pageLink()
     };
   }
 
-  pageTitle = () => {
-    return 'Module | reactGo';
+  pageTitle = (title) => {
+    return title;
   };
 
   pageMeta = () => {
     return [
-      { name: 'description', content: 'A reactGo example of life' }
+      { name: 'Description', content: 'Page for module' }
     ];
   };
 
@@ -26,12 +29,23 @@ class Module extends Component {
   };
 
   render() {
+    const { routing } = this.props;
+    console.log("Routing");
+    let modCode = routing.locationBeforeTransitions.pathname;
+    modCode = modCode.slice(9);
     return (
-      <Page {...this.getMetaData()}>
+      <Page {...this.getMetaData(modCode)}>
         <ModuleContainer {...this.props} />
       </Page>
     );
   }
 }
 
-export default Module;
+function mapStateToProps(state) {
+  return {
+    routing: state.routing
+  }
+}
+
+export default connect(mapStateToProps)(Module);
+
