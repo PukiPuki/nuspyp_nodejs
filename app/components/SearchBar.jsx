@@ -13,10 +13,11 @@ class SearchBar extends Component {
 	goToMod = (obj) => {
 		console.log("Go to Mod");
 		console.log(this.props);
-		browserHistory.push("/modules/" + obj);
+		browserHistory.push("/module/" + obj);
 	}
 
   componentWillMount() {
+    console.log("searhcbar");
     this.props.getModuleRequest()
     console.log(this.props);
   }

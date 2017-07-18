@@ -35,7 +35,7 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />
-      <Route path="modules/:id" component={Module} />
+      <Route path="module/:id" component={Module} />
     </Route>
   );
 };

@@ -21,14 +21,27 @@ const modules = (
 ) => {
   switch (action.type) {
     case types.MODULE_REQUEST_SUCCESS:
-      return action.mydata
+      return action.mydata;
     default:
       return state;
   }
-};
+}
+
+const modulefs = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.MODULE_YEARS_SEMS_REQUEST_SUCCESS:
+      return action.data;
+    default:
+      return state;
+  }
+}
 
 const moduleReducer = combineReducers({
   modules,
-});
+  modulefs,
+})
 
 export default moduleReducer;
