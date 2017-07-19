@@ -15,7 +15,7 @@ const module = (
   }
 }
 
-const modules = (
+const moduleList = (
   state = [],
   action
 ) => {
@@ -39,9 +39,23 @@ const modulefs = (
   }
 }
 
+const papers = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.REQUEST_SUCCESS:
+      if (action.data) return action.data;
+      return state;
+    default:
+      return state;
+  }
+}
+
 const moduleReducer = combineReducers({
-  modules,
+  moduleList,
   modulefs,
+  papers,
 })
 
 export default moduleReducer;

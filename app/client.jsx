@@ -9,7 +9,6 @@ import configureStore from './store/configureStore';
 import fetchDataForRoute from './utils/fetchDataForRoute';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import fetchModuleData from './fetch-data/fetchModuleData';
 injectTapEventPlugin();
 
 // Grab the state from a global injected into

@@ -4,8 +4,6 @@ import ModuleContainer from '../containers/Module';
 import { connect } from 'react-redux';
 
 class Module extends Component {
-
-
   getMetaData(modCode) {
     return {
       title: this.pageTitle(modCode),
@@ -31,8 +29,9 @@ class Module extends Component {
   render() {
     const { routing } = this.props;
     console.log("Routing");
-    let modCode = routing.locationBeforeTransitions.pathname;
-    modCode = modCode.slice(9);
+    // let modCode = routing.locationBeforeTransitions.pathname;
+    // modCode = modCode.slice(9);
+    const modCode = "SEX1002";
     return (
       <Page {...this.getMetaData(modCode)}>
         <ModuleContainer {...this.props} />

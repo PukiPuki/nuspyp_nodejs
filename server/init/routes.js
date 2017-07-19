@@ -56,8 +56,8 @@ export default (app) => {
 
   // module routes
   if (modulesController) {
-    app.get('/module', modulesController.all);
-    app.get('/module/:id', modulesController.getyearsem);
+    app.get('/api/modules', modulesController.all);
+    app.get('/api/modules/:id', modulesController.getPapers);
   } else {
     console.warn(unsupportedMessage('modules routes'));
   }

@@ -10,23 +10,21 @@ import { getModuleRequest } from '../actions/modules';
  */
 class SearchBar extends Component {
 
-	goToMod = (obj) => {
-		console.log("Go to Mod");
-		console.log(this.props);
-		browserHistory.push("/module/" + obj);
+	goToMod = (codeAndTitle) => {
+    const code = codeAndTitle.substr(0, codeAndTitle.indexOf(' '));
+		browserHistory.push("/modules/" + code);
 	}
 
   componentWillMount() {
-    console.log("searhcbar");
     this.props.getModuleRequest()
-    console.log(this.props);
   }
 
   render() {
-    const { modules } = this.props;
-		const arrCodes = modules.map((module) => {
-			return module.ModuleCode;
+    const { moduleList } = this.props;
+		const arrCodes = moduleList.map((module) => {
+			return `${module.ModuleCode} ${module.ModuleTitle}`;
 		})
+    console.log(arrCodes)
     return (
       <div>
         <AutoComplete
@@ -42,7 +40,7 @@ class SearchBar extends Component {
 function mapStateToProps(state) {
 	return {
 		routing: state.routing,
-		modules: state.module.modules
+		moduleList: state.module.moduleList,
 	}
 }
 

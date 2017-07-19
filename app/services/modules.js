@@ -6,7 +6,11 @@ export default () => {
   return {
     getModules: () => client.request({
       method: 'GET',
-      url: '/module'
+      url: '/api/modules'
+    }),
+    getPapers: ({ id }) => client.request({
+      method: 'GET',
+      url: `/api/modules/${id}`,
     })
   };
 };

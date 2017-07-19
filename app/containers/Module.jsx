@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import { Card, CardHeader } from 'material-ui/Card';
-import { getModuleYearsSemsRequest } from '../actions/modules';
 import { connect } from 'react-redux';
 /*
  * Note: This is kept as a container-level component,
@@ -24,22 +23,20 @@ class YearCard extends Component {
 
 class Module extends Component {
   componentWillMount() { 
-    this.props.getModuleYearsSemsRequest(this.props.params.id);
   }
 
   render() {
-    const { yearssems } = this.props;
-    const pull = yearssems.map((year, key) => {
-      console.log(key);
-      return (
-        <YearCard year={year} key={key} />
-      )
-    })
+  //   // const { yearssems } = this.props;
+  //   onst pull = yearssems.map((year, key) => {
+  //     console.log(key);
+  //     return (
+  //       <YearCard year={year} key={key} />
+  //     )
+  //   })
 
     return (
       <div>
-        <h1> { yearssems }</h1>
-        {pull}
+        <h1> tst test </h1>
       </div>
 	  )
   } 
@@ -51,4 +48,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getModuleYearsSemsRequest })(Module);
+export default connect(mapStateToProps, {  })(Module);
