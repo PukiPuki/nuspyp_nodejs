@@ -30,6 +30,7 @@ class Module extends Component {
   render() {
     const { yearssems } = this.props;
     const pull = yearssems.map((year, key) => {
+      console.log(key);
       return (
         <YearCard year={year} key={key} />
       )

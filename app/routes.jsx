@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { fetchVoteData, fetchModuleData } from './fetch-data';
+import { fetchVoteData, fetchModuleFSData } from './fetch-data';
 import { App, Module, Vote, Dashboard, About, LoginOrRegister } from './pages';
 
 /*
@@ -35,7 +35,7 @@ export default (store) => {
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />
-      <Route path="module/:id" component={Module} />
+      <Route path="module/:id" component={Module} fetchData={fetchModuleFSData} />
     </Route>
   );
 };
