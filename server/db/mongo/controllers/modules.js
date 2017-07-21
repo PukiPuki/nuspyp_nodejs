@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Module from '../models/modules';
 import Paper from '../models/papers';
+import Thread from '../models/threads';
 import mongoose from 'mongoose';
 
 import * as types from '../../../../app/types'
@@ -35,6 +36,16 @@ export function getThreads(req, res) {
   const type = types.THREADS_REQUEST_SUCCESS;
   const data = {moduleCode, yearSem};
   return res.json({ type, data })
+}
+
+export function postThread(req, res) {
+  Thread.create(req.body, (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).send(err);
+    }
+    return res.status(200).send('OK');
+  });
 }
 
 export default {

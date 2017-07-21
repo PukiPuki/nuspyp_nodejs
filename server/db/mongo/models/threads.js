@@ -12,7 +12,9 @@ const ThreadSchema = new mongoose.Schema({
   QuestionNumber: String,
   Title: String,
   Body: String,
-  Comments: { mongoose.Schema.Types.ObjectId }
+  Author: String,
+  DateCreated: { type: Date, default: Date.now },
+  Comments: { _id: mongoose.Schema.Types.ObjectId },
 });
 
 // Compiles the schema into a model, opening (or creating, if
