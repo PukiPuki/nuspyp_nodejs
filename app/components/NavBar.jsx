@@ -56,7 +56,7 @@ export default class DrawerUndockedExample extends React.Component {
 			
 				  <SearchBar />
 				</ToolbarGroup>
-				<ToolbarGroup>
+				<ToolbarGroup lastChild={true}>
 				{ user.authenticated 
 							? (<FlatButton label="Logout" 
 									href="/" onTouchTap={logOut} style={{color: "white"}} />) 

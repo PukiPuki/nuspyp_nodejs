@@ -18,6 +18,8 @@ const cx = classNames.bind(styles);
  * https://github.com/rackt/react-router/blob/latest/docs/Introduction.md
  */
 const App = ({ children }) => {
+  console.log("children");
+  console.log(children);
   return (
     <div className={cx('app')}>
       <Navigation />

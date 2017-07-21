@@ -2,16 +2,8 @@
 import md5 from 'spark-md5';
 import * as types from '../types';
 import { moduleService } from '../services';
+import { push } from 'react-router-redux';
 // import { modulefsService } from '../services';
-
-function createModuleRequest(data) {
-  return {
-    type: types.CREATE_MODULE_REQUEST,
-    id: data.id,
-    count: data.count,
-    text: data.text
-  };
-}
 
 export function getModuleRequest() {
   return (dispatch) => {
@@ -23,14 +15,9 @@ export function getModuleRequest() {
   }
 }
 
-// export function getModuleYearsSemsRequest(id) {
-//   return (dispatch) => {
-//     modulefsService().getYearsSems({ id })
-//       .then((res) => {
-//         console.log('res');
-//         console.log(res);
-//         const data = res.data;
-//         return dispatch({ type: types.MODULE_YEARS_SEMS_REQUEST_SUCCESS, data });
-//       })
-//   }
-// }
+export function goToThread(here) {
+  return (dispatch) => {
+    dispatch(push(here));
+  }
+}
+

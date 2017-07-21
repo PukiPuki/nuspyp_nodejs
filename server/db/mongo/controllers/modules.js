@@ -3,6 +3,7 @@ import Module from '../models/modules';
 import Paper from '../models/papers';
 import mongoose from 'mongoose';
 
+import * as types from '../../../../app/types'
 /**
  * List
  */
@@ -17,17 +18,27 @@ export function all(req, res) {
 }
 
 export function getPapers(req, res) {
-  const query = {"ModuleCode": req.params.id.toUpperCase()}
+  const query = {"ModuleCode": req.params.moduleCode.toUpperCase()}
   Paper.find(query).exec((err, papers) => {
     if(err) {
       console.log('err');
       return res.status(500).send('wrong data');
     }
-    return res.json(papers);
+    const type = types.PAPERS_REQUEST_SUCCESS;
+    const data = papers;
+    return res.json({ type, data });
   });
+}
+
+export function getThreads(req, res) {
+  const { moduleCode, yearSem } = req.params
+  const type = types.THREADS_REQUEST_SUCCESS;
+  const data = {moduleCode, yearSem};
+  return res.json({ type, data })
 }
 
 export default {
   all,
   getPapers,
+  getThreads,
 };

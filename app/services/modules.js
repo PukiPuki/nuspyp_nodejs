@@ -8,10 +8,18 @@ export default () => {
       method: 'GET',
       url: '/api/modules'
     }),
-    getPapers: ({ id }) => client.request({
+    getPapers: ({ moduleCode }) => client.request({
       method: 'GET',
-      url: `/api/modules/${id}`,
-    })
+      url: `/api/modules/${moduleCode}`,
+    }),
+    getThreads: ({ moduleCode, yearSem }) => client.request({
+      method: 'GET',
+      url: `/api/modules/${moduleCode}/${yearSem}`,
+    }),
+    postThread: ({ Thread }) => client.request({
+      method: 'POST',
+      url: `/api/modules/${moduleCode}/${yearSem}`,
+    }),
   };
 };
 

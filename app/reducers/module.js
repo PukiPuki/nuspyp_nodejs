@@ -44,7 +44,20 @@ const papers = (
   action
 ) => {
   switch(action.type) {
-    case types.REQUEST_SUCCESS:
+    case types.PAPERS_REQUEST_SUCCESS:
+      if (action.data) return action.data;
+      return state;
+    default:
+      return state;
+  }
+}
+
+const threads = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.THREADS_REQUEST_SUCCESS:
       if (action.data) return action.data;
       return state;
     default:
@@ -56,6 +69,7 @@ const moduleReducer = combineReducers({
   moduleList,
   modulefs,
   papers,
+  threads,
 })
 
 export default moduleReducer;

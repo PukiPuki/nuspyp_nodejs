@@ -12,7 +12,7 @@ class SearchBar extends Component {
 
 	goToMod = (codeAndTitle) => {
     const code = codeAndTitle.substr(0, codeAndTitle.indexOf(' '));
-		browserHistory.push("/modules/" + code);
+		browserHistory.push("/modules/" + code );
 	}
 
   componentWillMount() {
@@ -24,7 +24,6 @@ class SearchBar extends Component {
 		const arrCodes = moduleList.map((module) => {
 			return `${module.ModuleCode} ${module.ModuleTitle}`;
 		})
-    console.log(arrCodes)
     return (
       <div>
         <AutoComplete
