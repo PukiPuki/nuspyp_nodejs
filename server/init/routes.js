@@ -59,7 +59,7 @@ export default (app) => {
     app.get('/api/modules', modulesController.all);
     app.get('/api/modules/:moduleCode', modulesController.getPapers);
     app.get('/api/modules/:moduleCode/:yearSem', modulesController.getThreads);
-    //app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
+    app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
   } else {
     console.warn(unsupportedMessage('modules routes'));
   }

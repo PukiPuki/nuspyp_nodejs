@@ -16,10 +16,17 @@ export default () => {
       method: 'GET',
       url: `/api/modules/${moduleCode}/${yearSem}`,
     }),
-    postThread: ({ Thread }) => client.request({
-      method: 'POST',
-      url: `/api/modules/${moduleCode}/${yearSem}`,
-    }),
+    postThread: (Thread) => {
+      console.log("moduleservice.postthread");
+      const { ModuleCode, Year, Sem } = Thread
+      const YearSem = ""+Year+Sem
+      const data = Thread
+      return client.request({
+        method: 'POST',
+        url: `/api/modules/${ModuleCode}/${YearSem}`,
+        data
+      })
+    },
   };
 };
 

@@ -34,22 +34,37 @@ export function getPapers(req, res) {
 export function getThreads(req, res) {
   const { moduleCode, yearSem } = req.params
   const type = types.THREADS_REQUEST_SUCCESS;
-  const data = {moduleCode, yearSem};
-  return res.json({ type, data })
+  const ModuleCode = moduleCode;
+  const Year = Number.parseInt(yearSem.substring(0,4));
+  const Sem = Number.parseInt(yearSem.substring(4,5));
+  const query = { ModuleCode, Year, Sem }
+  console.log(query);
+  Thread.find(query).sort({DateCreated:'descending'}).exec((err, threads) => {
+    if(err) {
+      console.log('err');
+      return res.status(500).send('wrong data');
+    }
+    const data = threads
+    //console.log(data)
+    return res.json({ type, data });
+  })
 }
 
 export function postThread(req, res) {
+  console.log(req)
   Thread.create(req.body, (err) => {
     if (err) {
       console.log(err);
       return res.status(400).send(err);
     }
-    return res.status(200).send('OK');
+    return res.status(200).send('Updated successfully');
   });
 }
+
 
 export default {
   all,
   getPapers,
   getThreads,
+  postThread,
 };

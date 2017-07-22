@@ -15,6 +15,25 @@ export function getModuleRequest() {
   }
 }
 
+export function postThread( Thread ) {
+  console.log("why not posting")
+  return (dispatch) => {
+    console.log("proof of post")
+    moduleService().postThread(Thread)
+      .then((res) => {
+        const { ModuleCode, Year, Sem } = Thread;
+        const moduleCode = ModuleCode;
+        const yearSem = ""+Year+Sem;
+        return moduleService().getThreads({ moduleCode, yearSem })
+          .then((res) => {
+            console.log(res);
+            return dispatch(res.data);
+          })
+      })
+
+  }
+}
+
 export function goToThread(here) {
   return (dispatch) => {
     dispatch(push(here));

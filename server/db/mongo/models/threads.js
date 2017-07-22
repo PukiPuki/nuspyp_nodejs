@@ -5,7 +5,6 @@
 import mongoose from 'mongoose';
 
 const ThreadSchema = new mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
   ModuleCode: String,
   Year: Number,
   Sem: Number,
@@ -13,8 +12,9 @@ const ThreadSchema = new mongoose.Schema({
   Title: String,
   Body: String,
   Author: String,
+  Votes: Number,
   DateCreated: { type: Date, default: Date.now },
-  Comments: { _id: mongoose.Schema.Types.ObjectId },
+  Comments: [ mongoose.Schema.Types.ObjectId ],
 });
 
 // Compiles the schema into a model, opening (or creating, if
