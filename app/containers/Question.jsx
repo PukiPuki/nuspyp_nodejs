@@ -7,6 +7,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 // actions
 import { postThread }  from '../actions/modules';
@@ -19,8 +20,8 @@ import ThreadItem from '../components/ThreadItem';
  *  i.e. We should keep this as the container that does the data-fetching
  *  and dispatching of actions if you decide to have any sub-components.
  */
-class Thread extends Component {
 
+class CreateComment extends Component {
   constructor(props) {
     super(props)
     this.state = {open: false};
@@ -68,11 +69,6 @@ class Thread extends Component {
     console.log(this.props);
     console.log("threads");
     console.log(threads);
-    const threadItems = threads.map((thread, onKeyDown) => {
-      return (
-        <ThreadItem thread={thread} router={router} routeParams={routeParams} />
-      )
-    })
     const actions = [
       <RaisedButton
         label="Submit"
@@ -103,10 +99,64 @@ class Thread extends Component {
             <RaisedButton label="Create Thread" primary={true} onTouchTap={this.handleToggle.bind(this)} />
           </ToolbarGroup>
         </Toolbar>
-      {threadItems}
       </div>
     );
   }
+}
+
+class Head extends Component {
+  constructor() {
+    super()
+  }
+
+  render() {
+    const { thread } = this.props;
+    console.log(thread);
+    console.log(thread.Title);
+    return(
+      <div>
+        <CreateComment />
+        <Card>
+          <CardTitle title={thread.Title} subtitle={thread.Author} />
+          <CardText>
+            {thread.Body}
+          </CardText> 
+          <CardActions>
+            <FlatButton label="Comment" />
+            <FlatButton label="Like" />
+          </CardActions>
+        </Card>
+      </div>
+    )
+  }
+}
+
+class Question extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {open: false};
+  }
+
+  render() {
+    const { threads } = this.props;
+    console.log(threads)
+    const { threadId } = this.props.params;
+    console.log(threadId)
+    const thread = threads.filter((thread) => {
+      return thread._id == threadId
+    })[0]
+    console.log("threads")
+    console.log(threads)
+    console.log(thread)
+
+    return (
+      <div>
+        <h1> welcome to questions </h1>
+        <Head thread={thread} />
+      </div>
+    )
+  }
+
 };
 
 function mapStateToProps(state) {
@@ -115,4 +165,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { postThread })(Thread);
+export default connect(mapStateToProps, { postThread })(Question);

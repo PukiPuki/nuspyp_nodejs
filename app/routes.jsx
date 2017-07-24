@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchModuleData, fetchThreadData } from './fetch-data';
-import { App, Module, Vote, Dashboard, About, LoginOrRegister, Lvl1, Lvl2, Thread } from './pages';
+import { App, Module, Vote, Dashboard, About, LoginOrRegister, Lvl1, Lvl2, Thread, Question } from './pages';
 
 /*
  * @param {Redux Store}
@@ -38,6 +38,7 @@ export default (store) => {
       </Route>
         <Route path="modules/:moduleCode" component={Module} fetchData={fetchModuleData} />
         <Route path="modules/:moduleCode/:yearSem" component={Thread} fetchData={fetchThreadData} />
+        <Route path="modules/:moduleCode/:yearSem/:threadId" component={Question} fetchData={fetchThreadData} />
       <Route path="lvl1" component={Lvl1} fetchData={fetchModuleData}>
         <Route path="lvl2" component={Lvl2}>
         </Route>
