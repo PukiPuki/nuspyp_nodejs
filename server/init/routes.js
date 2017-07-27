@@ -8,16 +8,17 @@ import { controllers, passport as passportConfig } from '../db';
 const usersController = controllers && controllers.users;
 const topicsController = controllers && controllers.topics;
 const modulesController = controllers && controllers.modules;
+const nusLoginController = controllers && controllers.nusLogin;
 
 export default (app) => {
-  // user routes
-  if (usersController) {
-    app.post('/sessions', usersController.login);
-    app.post('/users', usersController.signUp);
-    app.delete('/sessions', usersController.logout);
-  } else {
-    console.warn(unsupportedMessage('users routes'));
-  }
+  // // user routes
+  // if (usersController) {
+  //   app.post('/sessions', usersController.nusLogin);
+  //   app.post('/users', usersController.nusSignUp);
+  //   app.delete('/sessions', usersController.nusLogout);
+  // } else {
+  //   console.warn(unsupportedMessage('users routes'));
+  // }
 
   if (passportConfig && passportConfig.google) {
     // google auth
@@ -65,4 +66,13 @@ export default (app) => {
   } else {
     console.warn(unsupportedMessage('modules routes'));
   }
+
+  // module routes
+  if (nusLoginController) {
+    app.get('/api/login/:token', nusLoginController.getUser);
+    app.get('/api/login/fetch/:token', nusLoginController.fetchModList);
+    app.get('/api/login/validate:token', nusLoginController.validate);
+  } else {
+    console.warn(unsupportedMessage('nusLogin routes'));
+	}
 };

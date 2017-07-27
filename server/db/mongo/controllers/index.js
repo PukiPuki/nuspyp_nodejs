@@ -1,10 +1,10 @@
 import topics from './topics';
-import users from './users';
 import modules from './modules';
-export { topics, users, modules };
+import nusLogin from './nusLogin';
+export { topics, modules, nusLogin };
 
 export default {
   topics,
-  users,
-	modules
+	modules,
+	nusLogin
 };

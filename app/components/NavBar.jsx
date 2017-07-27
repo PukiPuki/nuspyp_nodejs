@@ -12,11 +12,11 @@ import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import SearchBar from 'components/SearchBar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import ivle_api_key from '../../config/lapi.js';
 
 import { browserHistory } from 'react-router';
 
 const cx = classNames.bind(styles);
-
 
 export default class DrawerUndockedExample extends React.Component {
   constructor(props) {
@@ -36,6 +36,7 @@ export default class DrawerUndockedExample extends React.Component {
     browserHistory.push('/');
   }
 
+
   render() {
 	const { user, logOut } = this.props;
     return (
@@ -48,24 +49,22 @@ export default class DrawerUndockedExample extends React.Component {
         	<MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
         </Drawer>
 
-				<AppBar
-					title="NUSPYP" 
-					onTitleTouchTap={this.homeButton}
-					onLeftIconButtonTouchTap={this.handleToggle}> 
-				<ToolbarGroup>
-			
-				  <SearchBar />
-				</ToolbarGroup>
-				<ToolbarGroup lastChild={true}>
-				{ user.authenticated 
-							? (<FlatButton label="Logout" 
-									href="/" onTouchTap={logOut} style={{color: "white"}} />) 
-							: (<FlatButton label="Login" onClick={this.loginButton.bind(this)} style={{color: "white"}}/>)
-						} 
-			</ToolbarGroup>
-			</AppBar>
-      </div>
-		);
+	  <AppBar
+	    title="NUSPYP" 
+	    onTitleTouchTap={this.homeButton}
+	    onLeftIconButtonTouchTap={this.handleToggle}> 
+	    <ToolbarGroup>
+	  		<SearchBar />
+	    </ToolbarGroup>
+	  	<ToolbarGroup lastChild={true}>
+				<FlatButton 
+					label="Login" 
+					href={`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`} 
+					style={{color: "white"}}
+				/>			
+	  	</ToolbarGroup>
+		</AppBar>
+  </div>);
   }
 }
 

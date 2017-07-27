@@ -29,9 +29,8 @@ class Module extends Component {
   render() {
     const { routing } = this.props;
     console.log("Routing");
-    // let modCode = routing.locationBeforeTransitions.pathname;
-    // modCode = modCode.slice(9);
-    const modCode = "SEX1002";
+    let modCode = routing.locationBeforeTransitions.pathname;
+    modCode = modCode.slice(9);
     return (
       <Page {...this.getMetaData(modCode)}>
         <ModuleContainer {...this.props} />
