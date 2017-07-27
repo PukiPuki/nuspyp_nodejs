@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchModuleData, fetchThreadData } from './fetch-data';
 import { App, Module, Vote, Dashboard, About, LoginOrRegister, Lvl1, Lvl2, Thread, Question } from './pages';
+import Login from './components/Login';
 
 /*
  * @param {Redux Store}
