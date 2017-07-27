@@ -2,6 +2,7 @@ import _ from 'lodash';
 import Module from '../models/modules';
 import Paper from '../models/papers';
 import Thread from '../models/threads';
+import Comment from '../models/comments';
 import mongoose from 'mongoose';
 
 import * as types from '../../../../app/types'
@@ -61,10 +62,85 @@ export function postThread(req, res) {
   });
 }
 
+export function postCommentToThread(req, res) {
+  Comment.create(req.body, (err, comment) => {
+    Thread.findOneAndUpdate(
+      {_id: comment.ReplyToId},
+      {$push: {Comments: {_id: mongoose.Types.ObjectId(comment._id)}}},
+      {safe: true, upsert: true},
+      (err, thread) => {
+        return res.json(thread)
+    })
+  })
+}
+
+export function postCommentToComment(req, res) {
+  Comment.create(req.body, (err, comment) => {
+    Comment.findOneAndUpdate(
+      {_id: comment.ReplyToId},
+      {$push: {Comments: {_id: mongoose.Types.ObjectId(comment._id)}}},
+      {safe: true, upsert: true},
+      (err, thread) => {
+        return res.json(thread)
+    })
+  })
+}
+
+function arrayIdToComment(arrayOfId) {
+  if(arrayOfId.length == 0) {
+    return [];
+  } else {
+
+    const objectOfComments = arrayOfId.map((comment, key) => {
+      return {"_id": comment}
+    })
+
+    Comment
+      .find({"$or": objectOfComments})
+      .sort({DateCreated: -1})
+      .exec((err, arrayOfComments) => {
+        return (
+          arrayOfComments.map((each) => {
+            return arrayIdToComment(each.Comments);
+          })
+        )
+      })
+  }
+}
+
+
+
+export function getArrayOfComments(req, res) {
+  const arrayOfComments = req.body
+  const objectOfComments = arrayOfComments.map((comment, key) => {
+    return {"_id": comment}
+  })
+
+  console.log("objectOfComments");
+  console.log(objectOfComments);
+
+  Comment
+    .find({"$or": objectOfComments})
+    .sort({DateCreated: -1})
+    .exec((err, arrayOfComments) => {
+
+      const throwback2 = arrayOfComments.map((each) => {
+        each.Comments = arrayIdToComment(each.Comments);
+        return each;
+      })
+      console.log("throwback2");
+      console.log(throwback2);
+    return res.json(throwback2);
+  })
+}
 
 export default {
   all,
   getPapers,
   getThreads,
   postThread,
+  postCommentToThread,
+  postCommentToComment,
+  getArrayOfComments,
+
 };

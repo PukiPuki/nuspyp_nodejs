@@ -60,6 +60,8 @@ export default (app) => {
     app.get('/api/modules/:moduleCode', modulesController.getPapers);
     app.get('/api/modules/:moduleCode/:yearSem', modulesController.getThreads);
     app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
+    app.post('/api/threads', modulesController.postCommentToThread);
+    app.post('/api/comments', modulesController.getArrayOfComments);
   } else {
     console.warn(unsupportedMessage('modules routes'));
   }

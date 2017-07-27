@@ -56,6 +56,7 @@ class YearCard extends Component {
 
 class Module extends Component {
   render() {
+    console.log(this.props)
     const { papers, goToThread } = this.props;
     const moduleCode = papers[0].ModuleCode
     const paperList = papers[0].Papers.map((paper, key) => {

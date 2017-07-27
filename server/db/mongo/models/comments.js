@@ -8,11 +8,11 @@ const CommentSchema = new mongoose.Schema({
   ReplyTo: String,
   ReplyToId: mongoose.Schema.Types.ObjectId,
   Author: String,
-  AuthorId: mongoose.Schema.Types.ObjectId
+  AuthorId: mongoose.Schema.Types.ObjectId,
   Body: String,
   Votes: Number,
   DateCreated: { type: Date, default: Date.now },
-  Comments: [],
+  Comments: [ mongoose.Schema.Types.ObjectId ],
 });
 
 // Compiles the schema into a model, opening (or creating, if

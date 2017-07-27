@@ -65,11 +65,25 @@ const threads = (
   }
 }
 
+const comments = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.COMMENTS_REQUEST_SUCCESS:
+      if (action.data) return action.data;
+      return state;
+    default:
+      return state;
+  }
+}
+
 const moduleReducer = combineReducers({
   moduleList,
   modulefs,
   papers,
   threads,
+  comments,
 })
 
 export default moduleReducer;

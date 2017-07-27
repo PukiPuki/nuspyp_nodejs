@@ -34,8 +34,7 @@ export default (store) => {
       <IndexRoute component={Vote} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
-      <Route path="about" component={Dashboard}>
-      </Route>
+      <Route path="about" component={Dashboard} />
         <Route path="modules/:moduleCode" component={Module} fetchData={fetchModuleData} />
         <Route path="modules/:moduleCode/:yearSem" component={Thread} fetchData={fetchThreadData} />
         <Route path="modules/:moduleCode/:yearSem/:threadId" component={Question} fetchData={fetchThreadData} />
