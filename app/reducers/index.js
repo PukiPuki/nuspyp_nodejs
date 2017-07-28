@@ -3,7 +3,8 @@ import { routerReducer as routing } from 'react-router-redux';
 import user from '../reducers/user';
 import topic from '../reducers/topic';
 import message from '../reducers/message';
-import module from '../reducers/module';
+import nusLogin from '../reducers/nusLogin';
+import nusLogin from '../reducers/nusLogin';
 import * as types from '../types';
 
 const isFetching = (state = false, action) => {
@@ -25,8 +26,9 @@ const rootReducer = combineReducers({
   topic,
   user,
   message,
-  module,
-  routing
+  nusLogin,
+  routing,
+	nusLogin
 });
 
 export default rootReducer;

@@ -15,8 +15,8 @@ export function getUser(req, res, next) {
   request(url, function (error, response, body){
     if (!error && response.statusCode == 200) {
       const userid = body.substring(1,9);
-      const data = {type: types.NUS_LOGIN_SUCCESS, userid};
-      return res.send(data);
+      const data = {type: types.NUS_LOGIN_SUCCESS, userid:body};
+      return res.json(data);
       }
     })
 }
@@ -28,28 +28,42 @@ export function fetchModList(req, res, next) {
   request(url, function (error, response, body){
     if (!error && response.statusCode == 200) {
       const userid = body.substring(1,9);
-      const data = {type: types.FETCH_MODULE_LIST, userid};
-      return res.send(data);
+      const data = {type: types.FETCH_MODULE_LIST, modList:body };
+      return res.json(data);
       }
     })
 }
 
 export function validate(req, res, next) {
   const token = req.params.token;
-		const url = `
+	const url = `
 https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=${ivle_api_key}&Token=${token}`;
 				request(url, function(error, response, body){
 				if (error || response.statusCode != 200) {
-					console.error(err.message);
+					console.error(error.message);
 				} else {
-					console.log("Body:");
-					console.log(body);
-					const result = {type:types.VALIDATE, success:body};
-					return res.send(result);
+					const result = {type:types.VALIDATE, success:JSON.parse(body).Success};
+					return res.json(result);
 				}
 			});
 }
 
+export function all(req, res, next) {
+	const token = req.params.token;
+
+	if (validate(token).success){
+		const {modList} = fetchModList(token);
+		console.log("MODLIST");
+		console.log(modList)
+		const {userid} = getUser(token);
+		console.log("USERID");
+		console.log(userid);
+		const result = {type:types.FETCH_LAPI_SUCCESS, data: {modList, userid}}
+		return res.json(result);
+	} else {
+		console.err("LAPI_FETCH_ERROR");
+	}
+}
 /**
  * POST /signup
  * Create a new local account

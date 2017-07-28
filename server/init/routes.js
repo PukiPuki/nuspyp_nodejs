@@ -57,7 +57,7 @@ export default (app) => {
 
   // module routes
   if (modulesController) {
-    app.get('/api/modules', modulesController.all);
+    // app.get('/api/modules', modulesController.all);
     app.get('/api/modules/:moduleCode', modulesController.getPapers);
     app.get('/api/modules/:moduleCode/:yearSem', modulesController.getThreads);
     app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
@@ -69,9 +69,9 @@ export default (app) => {
 
   // module routes
   if (nusLoginController) {
-    app.get('/api/login/:token', nusLoginController.getUser);
+    app.get('/api/login/:token', nusLoginController.all);
     app.get('/api/login/fetch/:token', nusLoginController.fetchModList);
-    app.get('/api/login/validate:token', nusLoginController.validate);
+    app.get('/api/login/validate/:token', nusLoginController.validate);
   } else {
     console.warn(unsupportedMessage('nusLogin routes'));
 	}

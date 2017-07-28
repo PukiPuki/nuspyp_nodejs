@@ -21,13 +21,10 @@ class Login extends Component {
 	}
 
 	componentWillMount() {
-		console.log("marker");
-		console.log(this.props)
 		const { getUser, fetchModList, validate} = this.props;
     const token = this.props.location.query.token;
-		// validate(token);
-		console.log("Validate");
-		console.log(validate(token));
+		console.log("LAPI");
+		console.log(this.props.data);
 		// if (validate(token)){
 			// console.log("True");
 			// getUser(token);
@@ -68,6 +65,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
 	return {
+		data: state.nusLogin.all.data
 	}
 }
 
