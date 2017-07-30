@@ -1,8 +1,10 @@
 import User from '../models/user';
 import ivle_api_key from '../../../../config/lapi.js';
 import request from 'request';
+import rp from 'request-promise';
+import async from 'async'
 
-import * as types from '../../../../app/types'
+import * as types from '../../../../app/types';
 
 /**
  * POST /login
@@ -48,22 +50,51 @@ https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=${ivle_api_key}&Token=${tok
 			});
 }
 
+function validate(token) {
+	const url = `
+https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=${ivle_api_key}&Token=${token}`;
+	return rp(url, function(error, response, body){
+		if (error || response.statusCode != 200) {
+			console.error(error.message);
+		} else {
+		}
+	})
+	.then((result) => {return JSON.parse(result).Success;})
+	.catch(function (err) {console.log("Error in validation" + err);});
+
+}
+
 export function all(req, res, next) {
 	const token = req.params.token;
+	validate(token).then((result) => {
+		if (result==true){
+			function httpGet(url, callback){
+				const options = {
+					url : url,
+					json : true
+				};
+				request(options, 
+					function (error, response, body){
+						callback(error, body);
+					}
+				);
+			}
+			const urls= [`https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey=${ivle_api_key}&Token=${token}`,`https://ivle.nus.edu.sg/api/Lapi.svc/Modules?APIKey=${ivle_api_key}&AuthToken=${token}&Duration=10&IncludeAllInfo=false`];
 
-	if (validate(token).success){
-		const {modList} = fetchModList(token);
-		console.log("MODLIST");
-		console.log(modList)
-		const {userid} = getUser(token);
-		console.log("USERID");
-		console.log(userid);
-		const result = {type:types.FETCH_LAPI_SUCCESS, data: {modList, userid}}
-		return res.json(result);
-	} else {
-		console.err("LAPI_FETCH_ERROR");
-	}
+			async.map(urls, httpGet, function(err, result){
+				if (err) return console.log(err);
+					const modsArr = result[1].Results.map((x)=> {return x.CourseCode;});
+					const data = {success:true, userid:result[0], mods: modsArr};
+					return res.json(data);
+				});
+		} else {
+			console.error("Invalid token, unable to fetch modules");
+			const data ={success:false};
+			return res.json(data);
+		}
+	});
 }
+
 /**
  * POST /signup
  * Create a new local account
@@ -99,6 +130,7 @@ export function nusLogout(req, res) {
 }
 
 export default {
+	all,
 	getUser,
 	fetchModList,
 	validate,

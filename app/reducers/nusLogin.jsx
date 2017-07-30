@@ -1,5 +1,29 @@
+import { combineReducers } from 'redux';
 import * as types from '../types';
 
+const all = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    case types.FETCH_LAPI_SUCCESS:
+      return action.data;
+		default:
+			return state;
+	}
+};
+
+const getUser = (
+  state = {},
+  action
+) => {
+  switch (action.type) {
+    case types.NUS_LOGIN_SUCCESS:
+      return action.userid;
+		default:
+			return state;
+	}
+};
 const fetchModList = (
   state = {},
   action
@@ -24,4 +48,11 @@ const validate = (
 	}
 };
 
-export default getUser,fetchModList, validate;
+const nusLoginReducer = combineReducers({
+	all,
+	getUser,
+	fetchModList,
+	validate
+})
+
+export default nusLoginReducer;

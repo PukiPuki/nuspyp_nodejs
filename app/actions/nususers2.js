@@ -2,14 +2,24 @@
 import md5 from 'spark-md5';
 import * as types from '../types';
 import { nusLoginService } from '../services';
+import {push} from 'react-router-redux';
+import {ivle_api_key} from '../../config/lapi.js'
 
 export function all(token){
 	return (dispatch)	=> {
 		nusLoginService().all(token)
 			.then((res) => {
-				return dispatch(res);
+				const result = {type:types.FETCH_LAPI_SUCCESS, data:res.data};
+				switch (result.data.success){
+					case true:	
+						// dispatch(push('/'));
+						return dispatch(result);
+					case false:
+						alert('Invalid token.Please login again.');
+						// return dispatch(push('/'));
+				}
 		})	
-	}
+	};
 }
 export function getUser(token){
 	return (dispatch)	=> {

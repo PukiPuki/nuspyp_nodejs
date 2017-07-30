@@ -57,7 +57,7 @@ export default (app) => {
 
   // module routes
   if (modulesController) {
-    // app.get('/api/modules', modulesController.all);
+    app.get('/api/modules', modulesController.all);
     app.get('/api/modules/:moduleCode', modulesController.getPapers);
     app.get('/api/modules/:moduleCode/:yearSem', modulesController.getThreads);
     app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
