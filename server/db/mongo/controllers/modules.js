@@ -52,7 +52,7 @@ export function getPaper(req, res) {
 }
 
 export function all(req, res) {
-  Module.find(mongoose.Types.ObjectId("596ee5cdeff7d546a7c59ca1")).exec((err, modules) => {
+  Module.find({_id: mongoose.Types.ObjectId("596ee5cdeff7d546a7c59ca1")}).exec((err, modules) => {
     if (err) {
       console.log('Error in first query');
       return res.status(500).send('Something went wrong getting the data');

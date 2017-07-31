@@ -54,43 +54,6 @@ const isWaiting = (
   }
 };
 
-const NUSLogin = (
-  state = {},
-  action
-) => {
-  switch (action.type) {
-    case types.NUS_LOGIN_SUCCESS:
-      return action.userid;
-		default:
-			return state;
-	}
-};
-
-
-const fetchModList = (
-  state = {},
-  action
-) => {
-  switch (action.type) {
-    case types.FETCH_MODULE_LIST:
-      return action.modList;
-		default:
-			return state;
-	}
-};
-
-const validate = (
-  state = {},
-  action
-) => {
-  switch (action.type) {
-    case types.VALIDATE:
-      return action.success;
-		default:
-			return state;
-	}
-};
-
 const authenticated = (
   state = false,
   action
@@ -114,9 +77,6 @@ const userReducer = combineReducers({
   isWaiting,
   authenticated,
   message,
-	NUSLogin,
-	fetchModList,
-	validate
 });
 
 export default userReducer;

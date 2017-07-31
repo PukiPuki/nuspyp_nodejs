@@ -3,6 +3,7 @@ import { routerReducer as routing } from 'react-router-redux';
 import user from '../reducers/user';
 import topic from '../reducers/topic';
 import message from '../reducers/message';
+import nusLogin from '../reducers/nusLogin';
 import module from '../reducers/module';
 import * as types from '../types';
 
@@ -25,8 +26,9 @@ const rootReducer = combineReducers({
   topic,
   user,
   message,
-  module,
-  routing
+  nusLogin,
+  routing,
+	module
 });
 
 export default rootReducer;

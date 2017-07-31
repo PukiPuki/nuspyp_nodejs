@@ -4,6 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import {Link} from 'react-router';
 import styles from '../css/components/navigation';
 import classNames from 'classnames/bind';
+import { connect } from 'react-redux';
 
 // Material Ui
 import ReactDOM from 'react-dom';
@@ -18,7 +19,7 @@ import { browserHistory } from 'react-router';
 
 const cx = classNames.bind(styles);
 
-export default class DrawerUndockedExample extends React.Component {
+class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {open: false};
@@ -36,9 +37,21 @@ export default class DrawerUndockedExample extends React.Component {
     browserHistory.push('/');
   }
 
+	modRedirect(module){
+		browserHistory.push(`/1`);
+	}
+
 
   render() {
 	const { user, logOut } = this.props;
+	const loadMods = (modsArr) => {
+			if (modsArr == undefined) console.error('Not logged in!'); 
+			else {
+			return modsArr.map((module) =>{
+				return <MenuItem onTouchTap={this.modRedirect(module)}>{module}</MenuItem>;
+			});
+			}
+	};
     return (
       <div>
         <Drawer
@@ -46,7 +59,7 @@ export default class DrawerUndockedExample extends React.Component {
         	width={200}
         	open={this.state.open}
         	onRequestChange={(open) => this.setState({open})}>
-        	<MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
+				{loadMods(this.props.lapi.mods)}
         </Drawer>
 
 	  <AppBar
@@ -68,4 +81,10 @@ export default class DrawerUndockedExample extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+	return {
+		lapi: state.nusLogin.all
+	}
+}
 
+export default connect(mapStateToProps)(NavBar);
