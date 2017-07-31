@@ -47,10 +47,14 @@ class Vote extends Component {
 
   render() {
     
+    const style = {
+      marginTop: 20,
+    }
+    
     const Cards = (cardArray) => {
       return cardArray.map((each) => {
         return (
-          <Card>
+          <Card style={style}>
             <CardHeader
               title={each.author}
               subtitle={each.module}
