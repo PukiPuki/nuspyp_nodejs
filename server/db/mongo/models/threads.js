@@ -15,6 +15,7 @@ const ThreadSchema = new mongoose.Schema({
   Votes: Number,
   DateCreated: { type: Date, default: Date.now },
   Comments: [ mongoose.Schema.Types.ObjectId ],
+  children: [ mongoose.Schema.Types.ObjectId ],
 });
 
 // Compiles the schema into a model, opening (or creating, if

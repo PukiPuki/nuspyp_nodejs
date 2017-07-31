@@ -11,7 +11,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 // actions
 import { postThread }  from '../actions/modules';
-import { postCommentToThread, getArrayOfComments } from '../actions/modules';
+import { postCommentToThread, getArrayOfComments, postCommentToComment } from '../actions/modules';
 
 // components
 import ThreadItem from '../components/ThreadItem';
@@ -28,28 +28,43 @@ class Tail extends Component {
   }
 
   handleCommentButton() {
-    const { handleToggle, comment } = this.props;
+    const { handleToggle, comment, threadId } = this.props;
+    console.log("I am the comment handler")
     handleToggle({
       type: "comment",
+      threadId,
       Replyto: comment.Author,
       ReplyToId: comment._id,
     });
   }
 
   render() {
-    const { ReplyTo, Author, Body } = this.props.comment;
+    const { ReplyTo, Author, Body, DateCreated } = this.props.comment;
+    const { style } = this.props;
+
+    const nameAndDate = ({Author, DateCreated}) => {
+      return (
+        <div>
+          {Author}
+          <br/>
+          {DateCreated}
+        </div>
+      )
+    }
+
     return (
-      <div>
+      <div style={style}>
         <Card>
           <CardText>
             {Body}
           </CardText>
-          <CardTitle subtitle={ReplyTo} />
+          <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
           <CardActions>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton.bind(this)}/>
             <FlatButton label="Like" />
           </CardActions>
         </Card>
+        {this.props.children}
       </div>
     )
   }
@@ -61,8 +76,7 @@ class Head extends Component {
   }
   
   handleCommentButton() {
-    const { thread, handleToggle } = this.props
-    console.log("handle comment button");
+    const { thread, handleToggle, threadId } = this.props
     handleToggle({
       type: "thread",
       ReplyTo: thread.Author,
@@ -71,7 +85,35 @@ class Head extends Component {
   }
 
   render() {
-    const { thread } = this.props;
+    const { thread, handleToggle, threadId } = this.props;
+
+    const style = (size) => {
+      return {
+        marginLeft: size,
+        marginTop: size,
+      }
+    }
+
+    const recurseComments = (commentsArray, size, add, threadId) => {
+      if(commentsArray.length==0) {
+        return []
+      } else {
+        return (
+          commentsArray.map((comment) => {
+            return (
+              <Tail
+                style={style(size)}
+                comment={comment}
+                handleToggle={handleToggle}
+                threadId={threadId} >
+                {recurseComments(comment.Comments, size+add, add, threadId)}
+              </Tail>
+            )
+          })
+        )
+      }
+    }
+
     return(
       <div>
         <Card>
@@ -84,6 +126,9 @@ class Head extends Component {
             <FlatButton label="Like" />
           </CardActions>
         </Card>
+
+        {recurseComments(thread.Comments,20,0,threadId)}
+        
       </div>
     )
   }
@@ -109,28 +154,32 @@ class Question extends Component {
   }
 
   handleSubmit() {
-    const { postCommentToThread } = this.props;
+    const { postCommentToThread, postCommentToComment } = this.props;
     const { createComment } = this.state;
     switch (createComment.type) {
       case "thread":
         postCommentToThread(createComment.comment);
         break;
+      case "comment":
+        postCommentToComment(createComment);
       default:
         console.log("no thread");
     }
   }
 
-  handleToggle({ type, ReplyTo, ReplyToId }) {
+  handleToggle({ type, ReplyTo, ReplyToId, threadId }) {
     this.setState({
       open: !this.state.open,
       createComment: {
         type,
+        threadId,
         comment: {
           ReplyTo,
           ReplyToId,
           Author: "some commenter",
           Votes: 99,
           Comments: [],
+          children: [],
         }
       }
     });
@@ -140,33 +189,13 @@ class Question extends Component {
     this.state.createComment.comment.Body = e.target.value;
   }
 
-  handleCommentButton(e) {
-  
-  }
-
-  componentWillMount() {
-    // to generate the first head.
-    const { threads, getArrayOfComments, comments } = this.props;
-    const { threadId } = this.props.params;
-    const thread = threads.filter((thread) => {
-      return thread._id == threadId
-    })[0]
-    const { Comments } = thread;
-    getArrayOfComments(Comments);
+  logger = () => {
+    console.log("this.,props,state.thread");
+    console.log(this.props.thread)
   }
 
   render() {
-    const { threads, comments } = this.props;
     const { threadId } = this.props.params;
-    const thread = threads.filter((thread) => {
-      return thread._id == threadId
-    })[0]
-
-    const explodeComments = comments.map((comment, key) => {
-      return (
-        <Tail comment={comment} handleToggle={this.handleToggle.bind(this)}/>
-      )
-    })
 
     const actions = [
       <RaisedButton
@@ -188,23 +217,25 @@ class Question extends Component {
           modal={true}
           open={this.state.open}
           actions={actions}
-          onRequestClose={this.handleToggle.bind(this)} >
+          onRequestClose={this.handleToggle.bind(this)}
+        >
           <TextField hintText="Id" onChange={this.handleId.bind(this)} value={this.state.createComment.comment.ReplyToId} fullWidth={true} />
           <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
         </Dialog>
         <h1> welcome to questions </h1>
-        <Head thread={thread} handleToggle={this.handleToggle.bind(this)}/>
-        {explodeComments}
+        <FlatButton label="touch tap" onTouchTap={this.logger} />
+        <canvas id="myCanvas" width="200" height="100" style={{border: '1px solid #000000'}} ></canvas>
+        <Head thread={this.props.thread} handleToggle={this.handleToggle.bind(this)} threadId={threadId}/>
       </div>
     )
   }
 };
 
 function mapStateToProps(state) {
+  console.log("Are you being called everything updates");
   return {
-    threads: state.module.threads,
-    comments: state.module.comments,
+    thread: state.module.thread,
   }
 }
 
-export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments })(Question);
+export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment })(Question);

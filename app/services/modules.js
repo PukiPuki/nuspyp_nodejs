@@ -37,7 +37,7 @@ export default () => {
     getArrayOfComments: (arrayOfId) => {
       const data = arrayOfId
       return client.request({
-        method: 'GET',
+        method: 'POST',
         url: `/api/comments`,
         data
       })
@@ -48,6 +48,12 @@ export default () => {
         method: 'POST',
         url: `/api/comments`,
         data
+      })
+    },
+    getThread2: ({threadId}) => {
+      return client.request({
+        method: 'GET',
+        url: `/api/threads/${threadId}`,
       })
     },
   };

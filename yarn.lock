@@ -179,6 +179,10 @@ arrify@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
+asap@^2.0.0:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
+
 asap@~2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
@@ -1945,6 +1949,13 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
+dezalgo@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/dezalgo/-/dezalgo-1.0.3.tgz#7f742de066fc748bc8db820569dddce49bf0d456"
+  dependencies:
+    asap "^2.0.0"
+    wrappy "1"
+
 diff@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
@@ -2703,6 +2714,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flushwritable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/flushwritable/-/flushwritable-1.0.0.tgz#3e328d8fde412ad47e738e3be750b4d290043498"
+
 follow-redirects@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"
@@ -3028,6 +3043,18 @@ graceful-fs@~1.2.0:
 "graceful-readlink@>= 1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
+
+gridfs-stream@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/gridfs-stream/-/gridfs-stream-1.1.1.tgz#3dd3a100ec2021a181282f6eb46709636074df89"
+  dependencies:
+    flushwritable "^1.0.0"
+
+gridfs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gridfs/-/gridfs-1.0.0.tgz#fe75f2ce817d0078503fc60e1cbb665ac88ea477"
+  dependencies:
+    gridfs-stream "^1.1.1"
 
 growl@1.9.2:
   version "1.9.2"
@@ -4371,6 +4398,14 @@ mongodb@2.2.25, "mongodb@>= 1.2.0 <3.0.0":
     es6-promise "3.2.1"
     mongodb-core "2.1.9"
     readable-stream "2.1.5"
+
+mongoose-gridfs@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/mongoose-gridfs/-/mongoose-gridfs-0.2.0.tgz#2afbf64dc8b335702286104835c0706deb8d0049"
+  dependencies:
+    gridfs-stream "^1.1.1"
+    lodash "^4.17.4"
+    stream-read "^1.1.2"
 
 mongoose@^4.9.3:
   version "4.9.3"
@@ -6529,6 +6564,12 @@ stream-http@^2.3.1:
     readable-stream "^2.2.6"
     to-arraybuffer "^1.0.0"
     xtend "^4.0.0"
+
+stream-read@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/stream-read/-/stream-read-1.1.2.tgz#3137110d7aa80ba54e4b829c4cd33ca106b9564d"
+  dependencies:
+    dezalgo "^1.0.1"
 
 stream-shift@^1.0.0:
   version "1.0.0"

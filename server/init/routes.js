@@ -62,7 +62,10 @@ export default (app) => {
     app.get('/api/modules/:moduleCode/:yearSem', modulesController.getThreads);
     app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
     app.post('/api/threads', modulesController.postCommentToThread);
-    app.post('/api/comments', modulesController.getArrayOfComments);
+    app.get('/api/threads/:threadId', modulesController.getThread2);
+    app.post('/api/comments', modulesController.postCommentToComment);
+    app.get('/api/papers/:ModuleCode/:Year/:Sem', modulesController.getPaper);
+    app.get('/api/papers/:ModuleCode/:Year/:Sem/:Page/', modulesController.getPaper);
   } else {
     console.warn(unsupportedMessage('modules routes'));
   }

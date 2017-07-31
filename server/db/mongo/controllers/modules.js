@@ -3,12 +3,54 @@ import Module from '../models/modules';
 import Paper from '../models/papers';
 import Thread from '../models/threads';
 import Comment from '../models/comments';
+import Fs from '../models/fs';
 import mongoose from 'mongoose';
+
 
 import * as types from '../../../../app/types'
 /**
  * List
  */
+
+import fs from 'mongoose-gridfs';
+const newConn = mongoose.createConnection('mongodb://localhost/ReactWebpackNode')
+const gridfs = fs({
+  collection:'fs',
+  mongooseConnection: newConn
+});
+const gfs = gridfs.model
+
+
+// test.readById(mongoose.Types.ObjectId('596aeab7eff7d5653a5e40c1'), function(error, buffer){
+//   console.log(error)
+//   console.log(buffer);
+// });
+
+export function getPaper(req, res) {
+  Fs.find(req.params).exec((err, paper) => {
+    if(err) {
+      return res.status(500).send('Something went wrong getting the data');
+    }
+    return paper;
+  }).then((pass) => {
+    const trans = pass.map((each) => {
+      return each._id;
+    })
+    return trans
+  }).then((pass) => {
+    const trans = pass.map((each) => {
+      gfs.readById(each, function(error, buffer){
+
+        return res.send(buffer)
+
+        // res.write(buffer,'binary')
+        // res.end(null,'binary')
+
+      })
+    });
+  })
+}
+
 export function all(req, res) {
   Module.find(mongoose.Types.ObjectId("596ee5cdeff7d546a7c59ca1")).exec((err, modules) => {
     if (err) {
@@ -66,48 +108,34 @@ export function postCommentToThread(req, res) {
   Comment.create(req.body, (err, comment) => {
     Thread.findOneAndUpdate(
       {_id: comment.ReplyToId},
-      {$push: {Comments: {_id: mongoose.Types.ObjectId(comment._id)}}},
+      {$push: {
+        Comments: {_id: mongoose.Types.ObjectId(comment._id)},
+        children: {_id: mongoose.Types.ObjectId(comment._id)},
+      }},
       {safe: true, upsert: true},
       (err, thread) => {
         return res.json(thread)
     })
   })
 }
-
 export function postCommentToComment(req, res) {
+  console.log("req.body")
+  console.log(req.body)
   Comment.create(req.body, (err, comment) => {
+    console.log("comment")
+    console.log(comment)
     Comment.findOneAndUpdate(
       {_id: comment.ReplyToId},
-      {$push: {Comments: {_id: mongoose.Types.ObjectId(comment._id)}}},
+      {$push: {
+        Comments: {_id: mongoose.Types.ObjectId(comment._id)},
+        children: {_id: mongoose.Types.ObjectId(comment._id)},
+      }},
       {safe: true, upsert: true},
       (err, thread) => {
         return res.json(thread)
     })
   })
 }
-
-function arrayIdToComment(arrayOfId) {
-  if(arrayOfId.length == 0) {
-    return [];
-  } else {
-
-    const objectOfComments = arrayOfId.map((comment, key) => {
-      return {"_id": comment}
-    })
-
-    Comment
-      .find({"$or": objectOfComments})
-      .sort({DateCreated: -1})
-      .exec((err, arrayOfComments) => {
-        return (
-          arrayOfComments.map((each) => {
-            return arrayIdToComment(each.Comments);
-          })
-        )
-      })
-  }
-}
-
 
 
 export function getArrayOfComments(req, res) {
@@ -134,13 +162,52 @@ export function getArrayOfComments(req, res) {
   })
 }
 
+export function getThread2(req, res) {
+  const threadId = req.params.threadId;
+  Thread.aggregate([
+    {$match: { _id: mongoose.Types.ObjectId(threadId) }},
+    {
+      $graphLookup: {
+      from: 'comments',
+      startWith: '$Comments',
+      connectFromField: 'Comments',
+      connectToField: '_id',
+      as: 'Comments'
+      }
+    }
+  ]).exec((err, thread) => {
+    const type = types.ONE_THREAD_REQUEST_SUCCESS;
+    const raw = thread[0]
+
+    // ineffficient algorithm to reconstruct
+    const tree2 = (comment, record) => {
+      if(comment.children.length==0) {
+        return comment;
+      } else {
+        const mycomment = comment.children.map((each) => {
+            const logthis = record.find((one) => {
+              return each.equals(one._id)
+            })
+            return tree2(logthis, record);
+        })
+        comment.Comments = mycomment
+        return comment
+      }
+    }
+
+    const data = tree2(raw, raw.Comments)
+
+    return res.json({type, data});
+  })
+}
+
 export default {
   all,
   getPapers,
   getThreads,
+  getThread2,
   postThread,
   postCommentToThread,
   postCommentToComment,
-  getArrayOfComments,
-
+  getPaper,
 };

@@ -65,6 +65,19 @@ const threads = (
   }
 }
 
+const thread = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.ONE_THREAD_REQUEST_SUCCESS:
+      if (action.data) return action.data;
+      return state;
+    default:
+      return state;
+  }
+}
+
 const comments = (
   state = [],
   action
@@ -82,6 +95,7 @@ const moduleReducer = combineReducers({
   moduleList,
   modulefs,
   papers,
+  thread,
   threads,
   comments,
 })

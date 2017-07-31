@@ -39,34 +39,41 @@ export function goToThread(here) {
 
 export function postCommentToThread(comment) {
   return (dispatch) => {
-    console.log("return from heaven");
     moduleService().postCommentToThread(comment)
       .then((res) => {
-        console.log("return from heaven");
-        dispatch({type: types.THREADS_REQUEST_SUCCESS, data: [res.data]})
+        dispatch({type: types.ONE_THREAD_REQUEST_SUCCESS, data: [res.data]})
       })
   }
 }
 
-export function postCommentToComment(comment) {
+export function postCommentToComment({comment, threadId}) {
   return (dispatch) => {
-    console.log("return from heaven");
     moduleService().postCommentToComment(comment)
       .then((res) => {
-        console.log("return from heaven");
-        dispatch({type: types.THREADS_REQUEST_SUCCESS, data: [res.data]})
+        moduleService().getThread2({threadId})
+          .then((res) => {
+            return dispatch(res.data)
+          })
       })
   }
 }
 
 export function getArrayOfComments(arrayOfId) {
-  console.log("action output comments");
-  console.log(arrayOfId);
+  console.log("get array of comments deprecated");
   return (dispatch) => {
     moduleService().getArrayOfComments(arrayOfId)
       .then((res) => {
-        console.log("action output comments");
         dispatch({type: types.COMMENTS_REQUEST_SUCCESS, data: res.data})
       })
   }
 }
+
+export function getThread2({threadId}) {
+  return (dispatch) => {
+    moduleService().getThread2({threadId})
+      .then((res) => {
+        return dispatch(res.data);
+      })
+  }
+}
+

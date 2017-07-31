@@ -36,7 +36,9 @@ function onUpdate() {
 
   fetchDataForRoute(this.state)
     .then((back) => {
+      console.log("back");
       const { type, data } = back;
+      console.log(back);
       return store.dispatch({type, data});
     }
 	);
