@@ -10,33 +10,26 @@ import FlatButton from 'material-ui/FlatButton';
 
 const cardArray = [
   {
-    author: "Mirana Arrow",
-    module: "MA1234",
-    title: "What does this mean?",
+    author: "Wong Ding Feng",
+    module: "ACC1002",
+    title: "12/13 Sem 1 Q10",
     yearSem: "1213SEM1",
-    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+    question: "Hi, can someone else help me with this question?",
   },
   {
-    author: "Mirana Arrow",
-    module: "MA1234",
-    title: "What does this mean?",
-    yearSem: "1213SEM1",
-    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+    author: "E0031263",
+    module: "MA1101R",
+    title: "15/16 Sem 2 Q5",
+    yearSem: "1516Sem2",
+    question: "Determine if the following matrices are orthogonal",
   },
   {
-    author: "Mirana Arrow",
-    module: "MA1234",
-    title: "What does this mean?",
-    yearSem: "1213SEM1",
-    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
-  },
-  {
-    author: "Mirana Arrow",
-    module: "MA1234",
-    title: "What does this mean?",
-    yearSem: "1213SEM1",
-    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
-  },
+    author: "E0031263",
+    module: "CS2020",
+    title: "14/15SEM2",
+    yearSem: "1415SEM2",
+    question: "What is the time complexity of the following programs",
+  }
 ]
 
 class Vote extends Component {
@@ -80,6 +73,7 @@ class Vote extends Component {
 
     return (
       <div>
+				<h1> Latest Threads</h1>
         {Cards(cardArray)}
       </div>
     );
