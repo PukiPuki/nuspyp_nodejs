@@ -2,11 +2,72 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+
+
+const cardArray = [
+  {
+    author: "Mirana Arrow",
+    module: "MA1234",
+    title: "What does this mean?",
+    yearSem: "1213SEM1",
+    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+  },
+  {
+    author: "Mirana Arrow",
+    module: "MA1234",
+    title: "What does this mean?",
+    yearSem: "1213SEM1",
+    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+  },
+  {
+    author: "Mirana Arrow",
+    module: "MA1234",
+    title: "What does this mean?",
+    yearSem: "1213SEM1",
+    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+  },
+  {
+    author: "Mirana Arrow",
+    module: "MA1234",
+    title: "What does this mean?",
+    yearSem: "1213SEM1",
+    question: "Find the area bounded by  x4+y4=4(x2+y2)  x4+y4=4(x2+y2)",
+  },
+]
+
 class Vote extends Component {
   render() {
+    
+    const Cards = (cardArray) => {
+      return cardArray.map((each) => {
+        return (
+          <Card>
+            <CardHeader
+              title={each.author}
+              subtitle={each.module}
+            />
+            <CardMedia
+              overlay={<CardTitle title={each.title} subtitle={each.yearSem} />}
+            >
+              <img src="https://image.slidesharecdn.com/modeltestpaperofjurisprudence-130613153937-phpapp01/95/model-test-paper-of-jurisprudence-1-638.jpg?cb=1371138004" alt="" height="100"/>
+            </CardMedia>
+            <CardText>
+              {each.question}
+            </CardText>
+            <CardActions>
+              <FlatButton label="Comment" />
+              <FlatButton label="Like" />
+            </CardActions>
+          </Card>
+        )
+      })
+    }
+
     return (
       <div>
-        <h1> root componnent </h1>  
+        {Cards(cardArray)}
       </div>
     );
   }
