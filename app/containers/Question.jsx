@@ -176,7 +176,7 @@ class Question extends Component {
         comment: {
           ReplyTo,
           ReplyToId,
-          Author: "Crystal Cheng",
+          Author: "Derrick Chua",
           Votes: 99,
           Comments: [],
           children: [],
