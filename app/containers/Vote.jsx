@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { browserHistory } from 'react-router';
+
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -38,6 +40,11 @@ const cardArray = [
 ]
 
 class Vote extends Component {
+
+  jump = () => {
+    browserHistory.push("/modules/ACC1002/12131/597d928961671e6ce820dec7")
+  }
+
   render() {
     
     const Cards = (cardArray) => {
@@ -47,9 +54,11 @@ class Vote extends Component {
             <CardHeader
               title={each.author}
               subtitle={each.module}
+              onTouchTap={this.jump}
             />
             <CardMedia
               overlay={<CardTitle title={each.title} subtitle={each.yearSem} />}
+              onTouchTap={this.jump}
             >
               <img src="https://image.slidesharecdn.com/modeltestpaperofjurisprudence-130613153937-phpapp01/95/model-test-paper-of-jurisprudence-1-638.jpg?cb=1371138004" alt="" height="100"/>
             </CardMedia>
