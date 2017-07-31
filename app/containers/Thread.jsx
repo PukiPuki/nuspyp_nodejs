@@ -53,7 +53,7 @@ class Thread extends Component {
       Title: this.state.title,
       Body: this.state.body,
       QuestionNumber: this.state.questionNumber,
-      Author: "Holy Jesus Burger",
+      Author: "E0031263",
       Votes: 99,
       Comments: [],
       ModuleCode,

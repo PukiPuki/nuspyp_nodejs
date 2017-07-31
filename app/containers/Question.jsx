@@ -176,7 +176,7 @@ class Question extends Component {
         comment: {
           ReplyTo,
           ReplyToId,
-          Author: "some commenter",
+          Author: "Crystal Cheng",
           Votes: 99,
           Comments: [],
           children: [],
@@ -222,14 +222,14 @@ class Question extends Component {
           <TextField hintText="Id" onChange={this.handleId.bind(this)} value={this.state.createComment.comment.ReplyToId} fullWidth={true} />
           <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
         </Dialog>
-        <h1> welcome to questions </h1>
-        <FlatButton label="touch tap" onTouchTap={this.logger} />
-        <canvas id="myCanvas" width="200" height="100" style={{border: '1px solid #000000'}} ></canvas>
         <Head thread={this.props.thread} handleToggle={this.handleToggle.bind(this)} threadId={threadId}/>
       </div>
     )
   }
 };
+
+        // <FlatButton label="touch tap" onTouchTap={this.logger} />
+        // <canvas id="myCanvas" width="200" height="100" style={{border: '1px solid #000000'}} ></canvas>
 
 function mapStateToProps(state) {
   console.log("Are you being called everything updates");
