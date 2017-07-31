@@ -18,15 +18,18 @@ class SearchBar extends Component {
   componentWillMount() {
     this.props.getModuleRequest()
   }
+	
 
   render() {
-    const { moduleList } = this.props;
+  	const style = {marginRight:200 };
+		const { moduleList } = this.props;
 		const arrCodes = moduleList.map((module) => {
 			return `${module.ModuleCode} ${module.ModuleTitle}`;
 		})
     return (
-      <div>
+      <div style={style}>
         <AutoComplete
+					hintText="Search"
           filter={AutoComplete.fuzzyFilter}
 					maxSearchResults={5}
 					dataSource={arrCodes} 

@@ -12,11 +12,11 @@ export function all(token){
 				const result = {type:types.FETCH_LAPI_SUCCESS, data:res.data};
 				switch (result.data.success){
 					case true:	
-						// dispatch(push('/'));
+						dispatch(push('/'));
 						return dispatch(result);
 					case false:
 						alert('Invalid token.Please login again.');
-						// return dispatch(push('/'));
+						return dispatch(push('/nusLogin'));
 				}
 		})	
 	};

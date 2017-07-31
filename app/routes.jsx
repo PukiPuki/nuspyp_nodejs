@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import { fetchModuleData, fetchThreadData, fetchThread2Data } from './fetch-data';
 import { App, Module, Vote, Dashboard, About, LoginOrRegister, Lvl1, Lvl2, Thread, Question } from './pages';
 import Login from './components/Login';
+import ivle_api_key from '../config/lapi.js';
 
 /*
  * @param {Redux Store}
@@ -44,6 +45,7 @@ export default (store) => {
         </Route>
       </Route>
       <Route path="callback" component={Login} />
+			<Route path="nusLogin" component={() => {window.location =`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`}} />
     </Route>
   );
 };

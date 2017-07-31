@@ -6,13 +6,23 @@ import styles from '../css/components/navigation';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 
-// Material Ui
+// Material UI
 import ReactDOM from 'react-dom';
 import FlatButton from 'material-ui/FlatButton'
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import SearchBar from 'components/SearchBar';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import Book from 'material-ui/svg-icons/action/book';
+import Divider from 'material-ui/Divider';
+import Settings from 'material-ui/svg-icons/action/settings';
+import SignOut from 'material-ui/svg-icons/action/exit-to-app';
+import SignIn from 'material-ui/svg-icons/action/perm-identity';
+import Avatar from 'material-ui/Avatar';
+import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
+
+
+//Import IVLE API Key
 import ivle_api_key from '../../config/lapi.js';
 
 import { browserHistory } from 'react-router';
@@ -29,28 +39,42 @@ class NavBar extends React.Component {
 
   handleClose = () => this.setState({open: false});
 
-  loginButton() {
-    browserHistory.push('/login');
+  loginButton = () => {
+    browserHistory.push('/nusLogin');
   }
 
   homeButton() {
     browserHistory.push('/');
   }
 
-	modRedirect(module){
-		browserHistory.push(`/1`);
+	modRedirect = (module) => {
+		browserHistory.push(`/modules/${module}`);
+		this.handleClose();
 	}
 
+	getUserID = () => {
+		return (this.props.lapi.userid == undefined) 
+			? 'Not logged in'
+			: this.props.lapi.userid
+	}
+
+	signButton = () => {
+		return (this.props.lapi.userid == undefined)
+			? <MenuItem leftIcon={<SignIn />} onTouchTap={this.loginButton}> Sign In </MenuItem>
+			: <MenuItem  leftIcon={<SignOut />} onTouchTap={this.handleClose}> Sign Out </MenuItem>
+	}
 
   render() {
 	const { user, logOut } = this.props;
 	const loadMods = (modsArr) => {
+		if (this.props.lapi.mods != undefined){
 			if (modsArr == undefined) console.error('Not logged in!'); 
 			else {
 			return modsArr.map((module) =>{
-				return <MenuItem onTouchTap={this.modRedirect(module)}>{module}</MenuItem>;
+				return <MenuItem leftIcon={<Book />} onTouchTap={()=> this.modRedirect(module)}>{module}</MenuItem>;
 			});
 			}
+		}
 	};
     return (
       <div>
@@ -59,23 +83,35 @@ class NavBar extends React.Component {
         	width={200}
         	open={this.state.open}
         	onRequestChange={(open) => this.setState({open})}>
-				{loadMods(this.props.lapi.mods)}
+					<Card>
+						<CardMedia 
+							overlay={
+								<div>
+									<Avatar style={{margin:5}}> P </Avatar>
+									<CardTitle 
+										title={this.getUserID()} 
+										titleColor={"white"}
+									/>
+								</div>
+							}
+						>
+								<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrsglofapYQYCRCMGg4C2JYOZl_feAj6l5QNl2p1K2UBYnK0VF' />
+							</CardMedia>
+						</Card>
+
+					<Divider />
+						{this.signButton()}
+					<Divider />
+						{loadMods(['ACC1002X'])}
+						{loadMods(this.props.lapi.mods)}
+					<Divider />
         </Drawer>
 
 	  <AppBar
 	    title="NUSPYP" 
 	    onTitleTouchTap={this.homeButton}
-	    onLeftIconButtonTouchTap={this.handleToggle}> 
-	    <ToolbarGroup>
-	  		<SearchBar />
-	    </ToolbarGroup>
-	  	<ToolbarGroup lastChild={true}>
-				<FlatButton 
-					label="Login" 
-					href={`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`} 
-					style={{color: "white"}}
-				/>			
-	  	</ToolbarGroup>
+	    onLeftIconButtonTouchTap={this.handleToggle} 
+	    iconElementRight={<SearchBar />}>
 		</AppBar>
   </div>);
   }
