@@ -95,7 +95,9 @@ class Head extends Component {
     }
 
     const recurseComments = (commentsArray, size, add, threadId) => {
-      if(commentsArray.length==0) {
+			if (commentsArray == undefined){
+				return []
+		  }else if(commentsArray.length==0) {
         return []
       } else {
         return (
