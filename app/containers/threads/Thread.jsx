@@ -10,11 +10,11 @@ import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 // actions
-import { postThread }  from '../actions/modules';
-import { postCommentToThread, getArrayOfComments, postCommentToComment } from '../actions/modules';
+import { postThread }  from '../../actions/modules';
+import { postCommentToThread, getArrayOfComments, postCommentToComment } from '../../actions/modules';
 
 // components
-import ThreadItem from '../components/ThreadItem';
+import ThreadItem from './ThreadItem';
 
 /*
  * Note: This is kept as a container-level component,

@@ -35,7 +35,7 @@ const cardArray = [
 class Vote extends Component {
 
   jump = () => {
-    browserHistory.push("/modules/ACC1002/12131/597d928961671e6ce820dec7")
+    browserHistory.push("/modules/ACC1002/12131/597eed34d117557720df35a2")
   }
 
   render() {

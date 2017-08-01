@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Page from '../pages/Page';
-import ThreadContainer from '../containers/Thread';
+import ThreadContainer from '../containers/threads/Thread';
 
-class About extends Component {
+class Thread extends Component {
   getMetaData() {
     return {
       title: this.pageTitle(),
@@ -34,4 +34,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default Thread;

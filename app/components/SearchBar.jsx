@@ -21,7 +21,7 @@ class SearchBar extends Component {
 	
 
   render() {
-  	const style = {marginRight:200 };
+  	const style = {marginRight:20 };
 		const { moduleList } = this.props;
 		const arrCodes = moduleList.map((module) => {
 			return `${module.ModuleCode} ${module.ModuleTitle}`;

@@ -9,10 +9,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 // actions
-import { postThread }  from '../actions/modules';
+import { postThread }  from '../../actions/modules';
 
 // components
-import ThreadItem from '../components/ThreadItem';
+import ThreadItem from './ThreadItem';
 
 /*
  * Note: This is kept as a container-level component,
@@ -40,7 +40,7 @@ class Thread extends Component {
     this.setState({body: e.target.value});
   }
 
-  handleWeirdName(e) {
+  handleTitle(e) {
     this.setState({title: e.target.value});
   }
 
@@ -65,9 +65,6 @@ class Thread extends Component {
   
   render() {
     const { threads, router, routeParams } = this.props;
-    console.log(this.props);
-    console.log("threads");
-    console.log(threads);
     const threadItems = threads.map((thread, onKeyDown) => {
       return (
         <ThreadItem thread={thread} router={router} routeParams={routeParams} />
@@ -94,7 +91,7 @@ class Thread extends Component {
           actions={actions}
           onRequestClose={this.handleToggle.bind(this)} >
           <TextField hintText="Question Number" onChange={this.handleQuestionNumber.bind(this)} fullWidth={true} />
-          <TextField hintText="Title" onChange={this.handleWeirdName.bind(this)} fullWidth={true} />
+          <TextField hintText="Title" onChange={this.handleTitle.bind(this)} fullWidth={true} />
           <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
         </Dialog>
 
@@ -103,7 +100,7 @@ class Thread extends Component {
             <RaisedButton label="Create Thread" primary={true} onTouchTap={this.handleToggle.bind(this)} />
           </ToolbarGroup>
         </Toolbar>
-      {threadItems}
+        {threadItems}
       </div>
     );
   }

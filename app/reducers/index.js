@@ -5,6 +5,7 @@ import topic from '../reducers/topic';
 import message from '../reducers/message';
 import nusLogin from '../reducers/nusLogin';
 import module from '../reducers/module';
+import loading from '../reducers/loading';
 import * as types from '../types';
 
 const isFetching = (state = false, action) => {
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
   message,
   nusLogin,
   routing,
-	module
+	module,
+	loading,
 });
 
 export default rootReducer;

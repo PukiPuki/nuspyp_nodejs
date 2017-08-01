@@ -4,13 +4,15 @@ import classNames from 'classnames/bind';
 import Navigation from '../containers/Navigation';
 import Message from '../containers/Message';
 
+import Loading from './Loading';
+
 
 const App = ({ children }) => {
   return (
     <div>
       <Navigation />
       <Message />
-      {children}
+      <Loading component={children} />
     </div>
   );
 };

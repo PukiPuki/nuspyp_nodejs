@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { fetchModuleData, fetchThreadData, fetchThread2Data } from './fetch-data';
-import { App, Module, Vote, Dashboard, About, LoginOrRegister, Lvl1, Lvl2, Thread, Question } from './pages';
+import { App, Module, Vote, Dashboard, About, LoginOrRegister, Thread, ThreadList } from './pages';
 import Login from './components/Login';
 import ivle_api_key from '../config/lapi.js';
 
@@ -37,13 +37,11 @@ export default (store) => {
       <IndexRoute component={Vote} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={Dashboard} />
-        <Route path="modules/:moduleCode" component={Module} fetchData={fetchModuleData} />
-        <Route path="modules/:moduleCode/:yearSem" component={Thread} fetchData={fetchThreadData} />
-        <Route path="modules/:moduleCode/:yearSem/:threadId" component={Question} fetchData={fetchThread2Data} />
-      <Route path="lvl1" component={Lvl1} fetchData={fetchModuleData}>
-        <Route path="lvl2" component={Lvl2}>
-        </Route>
-      </Route>
+
+      <Route path="modules/:moduleCode" component={Module} fetchData={fetchModuleData} />
+      <Route path="modules/:moduleCode/:yearSem" component={ThreadList} fetchData={fetchThreadData} />
+      <Route path="modules/:moduleCode/:yearSem/:threadId" component={Thread} fetchData={fetchThread2Data} />
+
       <Route path="callback" component={Login} />
 			<Route path="nusLogin" component={() => {window.location =`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`}} />
     </Route>

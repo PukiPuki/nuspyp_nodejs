@@ -36,18 +36,10 @@ class YearCard extends Component {
     goToThread(here);
   }
 
-  menu() {
-    return (
-      <div>
-        <MenuItem primaryText={this.title()} onTouchTap={this.handleTouch.bind(this)} />
-      </div>
-    )
-  }
-
   render() {
     return (
       <div>
-        {this.menu()}
+        <MenuItem primaryText={this.title()} onTouchTap={this.handleTouch.bind(this)} />
       </div>
     )
   }
@@ -56,7 +48,6 @@ class YearCard extends Component {
 
 class Module extends Component {
   render() {
-    console.log(this.props)
     const { papers, goToThread } = this.props;
     const moduleCode = papers[0].ModuleCode
     const paperList = papers[0].Papers.map((paper, key) => {

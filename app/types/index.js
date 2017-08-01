@@ -1,5 +1,8 @@
 export const ONE_THREAD_REQUEST_SUCCESS = 'ONE_THREAD_REQUEST_SUCCESS';
 
+export const LOADED = 'LOADED';
+export const LOADING = 'LOADING';
+
 export const DISMISS_MESSAGE = 'DISMISS_MESSAGE';
 
 export const CREATE_REQUEST = 'CREATE_REQUEST';

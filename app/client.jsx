@@ -34,12 +34,13 @@ function onUpdate() {
     return;
   }
 
+  store.dispatch({type:"LOADING"})
   fetchDataForRoute(this.state)
     .then((back) => {
-      console.log("back");
-      const { type, data } = back;
-      console.log(back);
-      return store.dispatch({type, data});
+      const comeback = back || {type:"", data:""}
+      const { type, data } = comeback;
+      store.dispatch({type, data});
+      return store.dispatch({type:"LOADED"});
     }
 	);
 }

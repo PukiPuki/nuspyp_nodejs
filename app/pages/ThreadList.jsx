@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Page from '../pages/Page';
-import QuestionContainer from '../containers/Question';
+import ThreadListContainer from '../containers/threads/ThreadList';
 
-class Question extends Component {
+class ThreadList extends Component {
   getMetaData() {
     return {
       title: this.pageTitle(),
@@ -28,10 +28,10 @@ class Question extends Component {
   render() {
     return (
       <Page {...this.getMetaData()}>
-        <QuestionContainer {...this.props} />
+        <ThreadListContainer {...this.props} />
       </Page>
     );
   }
 }
 
-export default Question;
+export default ThreadList;
