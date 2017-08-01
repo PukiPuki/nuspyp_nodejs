@@ -18,6 +18,7 @@ const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 const routes = createRoutes(store);
+      store.dispatch({type:"LOADED"});
 
 /**
  * Callback function handling frontend route changes.
