@@ -28,7 +28,7 @@ class Thread extends Component {
 
   state = {open: false};
 
-  handleToggle() {
+  handleToggle =() => {
     this.setState({open: !this.state.open});
   }
 
@@ -44,7 +44,7 @@ class Thread extends Component {
     this.setState({title: e.target.value});
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     const { postThread, params } = this.props;
     const ModuleCode = params.moduleCode;
     const Year = Number.parseInt(params.yearSem.substring(0,4));
@@ -61,8 +61,9 @@ class Thread extends Component {
       Sem,
     }
     postThread(Thread);
+		return this.handleToggle();
   }
-  
+
   render() {
     const { threads, router, routeParams } = this.props;
     const threadItems = threads.map((thread, onKeyDown) => {
@@ -74,12 +75,13 @@ class Thread extends Component {
       <RaisedButton
         label="Submit"
         primary={true}
-        onTouchTap={this.handleSubmit.bind(this)}
+        onTouchTap={this.handleSubmit}
+				onRequestClose={this.handleToggle}
       />,
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleToggle.bind(this)}
+        onTouchTap={this.handleToggle}
       />,
     ]
     return (
@@ -89,7 +91,7 @@ class Thread extends Component {
           modal={true}
           open={this.state.open}
           actions={actions}
-          onRequestClose={this.handleToggle.bind(this)} >
+          onRequestClose={this.handleToggle} >
           <TextField hintText="Question Number" onChange={this.handleQuestionNumber.bind(this)} fullWidth={true} />
           <TextField hintText="Title" onChange={this.handleTitle.bind(this)} fullWidth={true} />
           <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
@@ -97,7 +99,7 @@ class Thread extends Component {
 
         <Toolbar>
           <ToolbarGroup>
-            <RaisedButton label="Create Thread" primary={true} onTouchTap={this.handleToggle.bind(this)} />
+            <RaisedButton label="Create Thread" primary={true} onTouchTap={this.handleToggle} />
           </ToolbarGroup>
         </Toolbar>
         {threadItems}

@@ -18,7 +18,7 @@ import { goToThread } from '../actions/modules';
 class YearCard extends Component {
   title() {
     const { year, sem } = this.props
-    const yearSem = `${year} SEM${sem}`;
+    const yearSem = `AY ${year} SEM ${sem}`;
     return yearSem
   }
 
@@ -46,8 +46,9 @@ class YearCard extends Component {
 }
 
 
+
 class Module extends Component {
-  render() {
+	render() {
     const { papers, goToThread } = this.props;
     const moduleCode = papers[0].ModuleCode
     const paperList = papers[0].Papers.map((paper, key) => {
@@ -58,7 +59,7 @@ class Module extends Component {
 
     return (
       <div>
-        <h1> tst test </h1>
+        <h1> {moduleCode} Past Year Papers </h1>
         {paperList}
       </div>
 	  )
