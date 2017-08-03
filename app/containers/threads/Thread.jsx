@@ -16,6 +16,8 @@ import { postCommentToThread, getArrayOfComments, postCommentToComment } from '.
 // components
 import ThreadItem from './ThreadItem';
 
+// quill
+import QuillWrap from '../QuillWrap'
 /*
  * Note: This is kept as a container-level component,
  *  i.e. We should keep this as the container that does the data-fetching
@@ -33,7 +35,7 @@ class Tail extends Component {
     handleToggle({
       type: "comment",
       threadId,
-      Replyto: comment.Author,
+      ReplyTo: comment.Author,
       ReplyToId: comment._id,
     });
   }
@@ -97,7 +99,7 @@ class Head extends Component {
     const recurseComments = (commentsArray, size, add, threadId) => {
 			if (commentsArray == undefined){
 				return []
-		  }else if(commentsArray.length==0) {
+		  } else if (commentsArray.length==0) {
         return []
       } else {
         return (
@@ -136,7 +138,7 @@ class Head extends Component {
   }
 }
 
-class Question extends Component {
+class Thread extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -196,6 +198,9 @@ class Question extends Component {
     console.log(this.props.thread)
   }
 
+  componentDidMount() {
+  }
+
   render() {
     const { threadId } = this.props.params;
 
@@ -221,9 +226,16 @@ class Question extends Component {
           actions={actions}
           onRequestClose={this.handleToggle.bind(this)}
         >
-          <TextField hintText="Id" onChange={this.handleId.bind(this)} value={this.state.createComment.comment.ReplyToId} fullWidth={true} />
+          <TextField hintText="Id" onChange={this.handleId.bind(this)} value={this.state.createComment.comment.ReplyTo} fullWidth={true} />
           <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
         </Dialog>
+        <canvas id="sex">
+      
+        </canvas>
+        <div style={{textAlign: "center"}}>
+          <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
+        </div>
+        <QuillWrap/>
         <Head thread={this.props.thread} handleToggle={this.handleToggle.bind(this)} threadId={threadId}/>
       </div>
     )
@@ -240,4 +252,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment })(Question);
+export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment })(Thread);

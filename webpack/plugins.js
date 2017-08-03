@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
-module.exports = ({ production = false, browser = false } = {}) => {
+module.exports = ({ production = false, browser = true } = {}) => {
   const bannerOptions = { raw: true, banner: 'require("source-map-support").install();' };
   const compress = { warnings: false };
   const compileTimeConstantForMinification = { __PRODUCTION__: JSON.stringify(production) };
