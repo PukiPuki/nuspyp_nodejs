@@ -29,7 +29,7 @@ class Tail extends Component {
     super(props)
   }
 
-  handleCommentButton() {
+  handleCommentButton = () => {
     const { handleToggle, comment, threadId } = this.props;
     console.log("I am the comment handler")
     handleToggle({
@@ -62,7 +62,7 @@ class Tail extends Component {
           </CardText>
           <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
           <CardActions>
-            <FlatButton label="Comment" onTouchTap={this.handleCommentButton.bind(this)}/>
+            <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
             <FlatButton label="Like" />
           </CardActions>
         </Card>
@@ -77,7 +77,7 @@ class Head extends Component {
     super()
   }
   
-  handleCommentButton() {
+  handleCommentButton = () => {
     const { thread, handleToggle, threadId } = this.props
     handleToggle({
       type: "thread",
@@ -126,7 +126,7 @@ class Head extends Component {
             {thread.Body}
           </CardText> 
           <CardActions>
-            <FlatButton label="Comment" onTouchTap={this.handleCommentButton.bind(this)}/>
+            <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
             <FlatButton label="Like" />
           </CardActions>
         </Card>
@@ -150,14 +150,12 @@ class Thread extends Component {
         }
       }
     };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  handleId() {
+  handleId = () => {
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     const { postCommentToThread, postCommentToComment } = this.props;
     const { createComment } = this.state;
     switch (createComment.type) {
@@ -171,7 +169,7 @@ class Thread extends Component {
     }
   }
 
-  handleToggle({ type, ReplyTo, ReplyToId, threadId }) {
+  handleToggle = ({ type, ReplyTo, ReplyToId, threadId }) => {
     this.setState({
       open: !this.state.open,
       createComment: {
@@ -189,7 +187,7 @@ class Thread extends Component {
     });
   }
 
-  handleBody(e) {
+  handleBody = (e) => {
     this.state.createComment.comment.Body = e.target.value;
   }
 
@@ -208,7 +206,7 @@ class Thread extends Component {
       <RaisedButton
         label="Submit"
         primary={true}
-        onTouchTap={this.handleSubmit.bind(this)}
+        onTouchTap={this.handleSubmit}
       />,
       <FlatButton
         label="Cancel"
@@ -220,14 +218,14 @@ class Thread extends Component {
     return (
       <div>
         <Dialog
-          title="Reply to Comment!"
+          title="Reply"
           modal={true}
           open={this.state.open}
           actions={actions}
-          onRequestClose={this.handleToggle.bind(this)}
+          onRequestClose={this.handleToggle}
         >
-          <TextField hintText="Id" onChange={this.handleId.bind(this)} value={this.state.createComment.comment.ReplyTo} fullWidth={true} />
-          <TextField hintText="Body" onChange={this.handleBody.bind(this)} fullWidth={true} />
+        To:  <TextField hintText="Id" onChange={this.handleId} value={this.state.createComment.comment.ReplyTo} fullWidth={true} />
+        Message: <TextField hintText="Body" onChange={this.handleBody} fullWidth={true} />
         </Dialog>
         <canvas id="sex">
       
@@ -236,7 +234,7 @@ class Thread extends Component {
           <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
         </div>
         <QuillWrap/>
-        <Head thread={this.props.thread} handleToggle={this.handleToggle.bind(this)} threadId={threadId}/>
+        <Head thread={this.props.thread} handleToggle={this.handleToggle} threadId={threadId}/>
       </div>
     )
   }

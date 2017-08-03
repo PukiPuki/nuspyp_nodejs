@@ -6,3 +6,6 @@ public
 compiled
 *.swp
 .vscode
+*.jsx~
+lapi.js
+*.js~
