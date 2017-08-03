@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 
+import theme from '../css/quill.snow.css'
+
+
+console.log(theme);
 class QuillWrap extends Component {
   constructor(props) {
     super(props)
@@ -12,7 +16,10 @@ class QuillWrap extends Component {
     const Quill = this.quill
     if(Quill) {
       return (
-        <Quill />
+        <div>
+          <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css" />
+          <Quill theme="snow"/>
+        </div>
       )
     } else {
       return null;
