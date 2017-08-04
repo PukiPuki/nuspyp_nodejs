@@ -41,7 +41,11 @@ export function postCommentToThread(comment) {
   return (dispatch) => {
     moduleService().postCommentToThread(comment)
       .then((res) => {
-        dispatch({type: types.ONE_THREAD_REQUEST_SUCCESS, data: [res.data]})
+        const threadId = comment.ReplyToId
+        moduleService().getThread2({threadId})
+          .then((res) => {
+            return dispatch(res.data)
+          })
       })
   }
 }

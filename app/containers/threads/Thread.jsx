@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import renderHTML from 'react-render-html';
+
 // Mateiral uI
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -58,7 +60,7 @@ class Tail extends Component {
       <div style={style}>
         <Card>
           <CardText>
-            {Body}
+            <div dangerouslySetInnerHTML={{__html: Body }} />
           </CardText>
           <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
           <CardActions>
@@ -123,7 +125,7 @@ class Head extends Component {
         <Card>
           <CardTitle title={thread.Title} subtitle={thread.Author} />
           <CardText>
-            {thread.Body}
+            <div dangerouslySetInnerHTML={{__html: thread.Body }} />
           </CardText> 
           <CardActions>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
@@ -158,6 +160,16 @@ class Thread extends Component {
   handleSubmit = () => {
     const { postCommentToThread, postCommentToComment } = this.props;
     const { createComment } = this.state;
+
+    console.log(this.state);
+    console.log(this.props);
+
+    // console.log(createComment);
+    // const dummy = document.createElement('html')
+    // dummy.innerHTML = createComment.comment.Body;
+    // console.log(dummy);
+    // console.log(dummy.getElementsByTagName('img'));
+
     switch (createComment.type) {
       case "thread":
         postCommentToThread(createComment.comment);
@@ -189,6 +201,10 @@ class Thread extends Component {
 
   handleBody = (e) => {
     this.state.createComment.comment.Body = e.target.value;
+  }
+
+  sendUp = (e) => {
+    this.state.createComment.comment.Body = e;
   }
 
   logger = () => {
@@ -225,15 +241,11 @@ class Thread extends Component {
           onRequestClose={this.handleToggle}
         >
         To:  <TextField hintText="Id" onChange={this.handleId} value={this.state.createComment.comment.ReplyTo} fullWidth={true} />
-        Message: <TextField hintText="Body" onChange={this.handleBody} fullWidth={true} />
+        Message: <br /><br />
+        <QuillWrap sendUp={this.sendUp}/>
         </Dialog>
-        <canvas id="sex">
-      
-        </canvas>
         <div style={{textAlign: "center"}}>
-          <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
         </div>
-        <QuillWrap/>
         <Head thread={this.props.thread} handleToggle={this.handleToggle} threadId={threadId}/>
       </div>
     )
@@ -242,6 +254,9 @@ class Thread extends Component {
 
         // <FlatButton label="touch tap" onTouchTap={this.logger} />
         // <canvas id="myCanvas" width="200" height="100" style={{border: '1px solid #000000'}} ></canvas>
+
+          // <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
+        // <TextField hintText="Body" onChange={this.handleBody} fullWidth={true} />
 
 function mapStateToProps(state) {
   console.log("Are you being called everything updates");

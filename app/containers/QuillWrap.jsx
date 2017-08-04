@@ -3,12 +3,17 @@ import React, {Component} from 'react';
 import theme from '../css/quill.snow.css'
 
 
+
 class QuillWrap extends Component {
   constructor(props) {
     super(props)
     if (document) {
       this.quill = require('react-quill');
     }
+  }
+
+  changeHandler = (e) => {
+    this.props.sendUp(e);
   }
 
   render() {
@@ -32,11 +37,15 @@ class QuillWrap extends Component {
 
                 ['clean']                                         // remove formatting button
             ];
+
     if(Quill) {
       return (
         <div>
           <link rel="stylesheet" href="//cdn.quilljs.com/1.2.6/quill.snow.css" />
-          <Quill theme="snow" modules={ {toolbar: toolbarOptions}}/>
+          <Quill
+            onChange={this.changeHandler}
+            theme="snow" 
+            modules={{toolbar: toolbarOptions}}/>
         </div>
       )
     } else {
@@ -45,3 +54,5 @@ class QuillWrap extends Component {
   }
 }
 export default QuillWrap;
+
+
