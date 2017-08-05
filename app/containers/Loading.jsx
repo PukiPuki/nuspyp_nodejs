@@ -6,10 +6,19 @@ class Loading extends Component{
 
   render() {
     const  { component, loading } = this.props;
+
+    const style = {
+      marginTop: 100,
+      textAlign: 'center',
+    }
     
     const prog = (loading) => {
       if(loading) {
-        return (<CircularProgress size={80} thickness={5} />)
+        return (
+          <div style={style}>
+            <CircularProgress size={180} thickness={15} />
+          </div>
+        )
       } else {
         return component;
       }

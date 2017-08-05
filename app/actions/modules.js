@@ -81,3 +81,14 @@ export function getThread2({threadId}) {
   }
 }
 
+export function updateComment({comment, threadId}) {
+  return (dispatch) => {
+    moduleService().updateComment({comment})
+      .then((res) => {
+        moduleService().getThread2({threadId})
+          .then((res) => {
+            return dispatch(res.data);
+          })
+      })
+  }
+}

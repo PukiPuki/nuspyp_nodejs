@@ -56,6 +56,14 @@ export default () => {
         url: `/api/threads/${threadId}`,
       })
     },
+    updateComment: ({comment}) => {
+      const data = comment;
+      return client.request({
+        method: 'PUT',
+        url: `/api/comments/${comment.commentId}`,
+        data
+      })
+    },
   };
 };
 

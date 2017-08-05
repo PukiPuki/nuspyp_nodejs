@@ -13,7 +13,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 // actions
 import { postThread }  from '../../actions/modules';
-import { postCommentToThread, getArrayOfComments, postCommentToComment } from '../../actions/modules';
+import { postCommentToThread, getArrayOfComments, postCommentToComment, updateComment } from '../../actions/modules';
 
 // components
 import ThreadItem from './ThreadItem';
@@ -33,12 +33,21 @@ class Tail extends Component {
 
   handleCommentButton = () => {
     const { handleToggle, comment, threadId } = this.props;
-    console.log("I am the comment handler")
     handleToggle({
       type: "comment",
       threadId,
       ReplyTo: comment.Author,
       ReplyToId: comment._id,
+    });
+  }
+
+  handleEdit = () => {
+    const { handleToggle, comment, threadId } = this.props;
+    handleToggle({
+      threadId,
+      type: "updateComment",
+      commentId: comment._id,
+      Body: comment.Body,
     });
   }
 
@@ -66,6 +75,7 @@ class Tail extends Component {
           <CardActions>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
             <FlatButton label="Like" />
+            <FlatButton label="Edit" onTouchTap={this.handleEdit} />
           </CardActions>
         </Card>
         {this.props.children}
@@ -158,12 +168,12 @@ class Thread extends Component {
   }
 
   handleSubmit = () => {
-    const { postCommentToThread, postCommentToComment } = this.props;
+    const {
+      postCommentToThread,
+      postCommentToComment,
+      updateComment, } = this.props;
     const { createComment } = this.state;
-
-    console.log(this.state);
-    console.log(this.props);
-
+    
     // console.log(createComment);
     // const dummy = document.createElement('html')
     // dummy.innerHTML = createComment.comment.Body;
@@ -176,18 +186,21 @@ class Thread extends Component {
         break;
       case "comment":
         postCommentToComment(createComment);
+      case "updateComment":
+        updateComment(createComment);
       default:
         console.log("no thread");
     }
   }
 
-  handleToggle = ({ type, ReplyTo, ReplyToId, threadId }) => {
+  handleToggle = ({ type, ReplyTo, ReplyToId, threadId, commentId }) => {
     this.setState({
       open: !this.state.open,
       createComment: {
         type,
         threadId,
         comment: {
+          commentId,
           ReplyTo,
           ReplyToId,
           Author: "Derrick Chua",
@@ -208,7 +221,6 @@ class Thread extends Component {
   }
 
   logger = () => {
-    console.log("this.,props,state.thread");
     console.log(this.props.thread)
   }
 
@@ -255,14 +267,13 @@ class Thread extends Component {
         // <FlatButton label="touch tap" onTouchTap={this.logger} />
         // <canvas id="myCanvas" width="200" height="100" style={{border: '1px solid #000000'}} ></canvas>
 
-          // <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
+        // <img id="myCanvas" src="/api/papers/ACC1002/1213/1/1" width="700px" style={{border: '1px solid #000000'}} ></img>
         // <TextField hintText="Body" onChange={this.handleBody} fullWidth={true} />
 
 function mapStateToProps(state) {
-  console.log("Are you being called everything updates");
   return {
     thread: state.module.thread,
   }
 }
 
-export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment })(Thread);
+export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment, updateComment })(Thread);
