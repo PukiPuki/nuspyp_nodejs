@@ -158,6 +158,21 @@ export function getArrayOfComments(req, res) {
   })
 }
 
+export function updateComment(req, res) {
+  Comment.findOneAndUpdate(
+    {_id: req.params.commentId},
+    {$set: {Body: req.body.Body}},
+    (err, comment) => {
+      if(err) {
+        console.log(err);
+        return res.status(500).send('Something went wrong getting the data');
+      }
+      console.log(comment);
+      return res.status(200).send('OKAY! HEAVY MACHINEGUN!');
+    }
+  )
+}
+
 export function getThread2(req, res) {
   const threadId = req.params.threadId;
   Thread.aggregate([
@@ -206,4 +221,5 @@ export default {
   postCommentToThread,
   postCommentToComment,
   getPaper,
+  updateComment,
 };
