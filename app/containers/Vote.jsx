@@ -7,6 +7,8 @@ import { browserHistory } from 'react-router';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
+import {logOut} from '../actions/users';
+import { Link } from 'react-router'
 
 const cardArray = [
   {
@@ -86,6 +88,7 @@ function mapStateToProps(state) {
     newTopic: state.topic.newTopic
   };
 }
+
 
 // Read more about where to place `connect` here:
 // https://github.com/rackt/react-redux/issues/75#issuecomment-135436563

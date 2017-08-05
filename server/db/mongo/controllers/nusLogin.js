@@ -59,15 +59,47 @@ https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=${ivle_api_key}&Token=${tok
 		} else {
 		}
 	})
-	.then((result) => {return JSON.parse(result).Success;})
+	.then((result) => {return {token:JSON.parse(result).Token , success:JSON.parse(result).Success};})
 	.catch(function (err) {console.log("Error in validation" + err);});
 
+}
+
+export function injectAll(req, res, next) {
+	const token = req.params.token;
+	validate(token).then((result) => {
+		if (result.success==true){
+			function httpGet(url, callback){
+				const options = {
+					url : url,
+					json : true
+				};
+				request(options, 
+					function (error, response, body){
+						callback(error, body);
+					}
+				);
+			}
+			const urls= [`https://ivle.nus.edu.sg/api/Lapi.svc/UserID_Get?APIKey=${ivle_api_key}&Token=${token}`,`https://ivle.nus.edu.sg/api/Lapi.svc/Modules?APIKey=${ivle_api_key}&AuthToken=${token}&Duration=10&IncludeAllInfo=false`];
+
+			async.map(urls, httpGet, function(err, result){
+				if (err) return console.log(err);
+					const modsArr = result[1].Results.map((x)=> {return x.CourseCode;});
+					const data = {success:true, userid:result[0], mods: modsArr};
+					return res.json(data);
+				});
+		} else {
+		console.log(result);
+			console.error("Invalid token, unable to fetch modules");
+			const data ={success:false};
+			return res.json(data);
+		}
+	});
 }
 
 export function all(req, res, next) {
 	const token = req.params.token;
 	validate(token).then((result) => {
-		if (result==true){
+		if (result.success==true){
 			function httpGet(url, callback){
 				const options = {
 					url : url,
@@ -130,6 +162,7 @@ export function nusLogout(req, res) {
 }
 
 export default {
+	injectAll,
 	all,
 	getUser,
 	fetchModList,

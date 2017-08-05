@@ -13,9 +13,12 @@ import mongoose from 'mongoose';
  */
 
 const UserSchema = new mongoose.Schema({
-  userid: String,
+  email: { type: String, unique: true, lowercase: true },
   password: String,
   tokens: Array,
+	nusToken: String,
+	name: String,
+	nusUserID: String,
   profile: {
     name: { type: String, default: '' },
     gender: { type: String, default: '' },

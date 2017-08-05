@@ -16,7 +16,7 @@ export function all(token){
 						return dispatch(result);
 					case false:
 						alert('Invalid token.Please login again.');
-						return dispatch(push('/nusLogin'));
+						dispatch(push('/'));
 				}
 		})	
 	};

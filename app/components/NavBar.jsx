@@ -5,6 +5,7 @@ import {Link} from 'react-router';
 import styles from '../css/components/navigation';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
+import { logOut } from '../actions/users';
 
 // Material UI
 import ReactDOM from 'react-dom';
@@ -60,8 +61,27 @@ class NavBar extends React.Component {
 
 	signButton = () => {
 		return (this.props.lapi.userid == undefined)
-			? <MenuItem leftIcon={<SignIn />} onTouchTap={this.loginButton}> Sign In </MenuItem>
+			? <a href = {`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`} > 
+				<MenuItem leftIcon={<SignIn />}> Sign In </MenuItem> </a>
 			: <MenuItem  leftIcon={<SignOut />} onTouchTap={this.handleClose}> Sign Out </MenuItem>
+	}
+
+	reactLogin = () => {
+		browserHistory.push('/login');
+		this.handleClose();
+	}
+
+	reactLogout = (logOut) => {
+		console.log(logOut);
+		logOut();
+		browserHistory.push('/');
+		this.handleClose();
+	}
+
+	reactLoginButton = ({user, logOut}) => {
+		return (!user.authenticated)
+			?	<MenuItem leftIcon={<SignIn />} onTouchTap={() => {this.reactLogin()}}>React Sign In </MenuItem>
+			: <MenuItem  leftIcon={<SignOut />} onTouchTap={() => this.reactLogout(logOut)}>React Sign Out </MenuItem>
 	}
 
   render() {
@@ -101,6 +121,7 @@ class NavBar extends React.Component {
 
 					<Divider />
 						{this.signButton()}
+						{this.reactLoginButton({user, logOut})}
 					<Divider />
 						{loadMods(['ACC1002X'])}
 						{loadMods(this.props.lapi.mods)}

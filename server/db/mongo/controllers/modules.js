@@ -119,11 +119,7 @@ export function postCommentToThread(req, res) {
   })
 }
 export function postCommentToComment(req, res) {
-  console.log("req.body")
-  console.log(req.body)
   Comment.create(req.body, (err, comment) => {
-    console.log("comment")
-    console.log(comment)
     Comment.findOneAndUpdate(
       {_id: comment.ReplyToId},
       {$push: {

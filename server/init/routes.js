@@ -12,13 +12,13 @@ const nusLoginController = controllers && controllers.nusLogin;
 
 export default (app) => {
   // // user routes
-  // if (usersController) {
-  //   app.post('/sessions', usersController.nusLogin);
-  //   app.post('/users', usersController.nusSignUp);
-  //   app.delete('/sessions', usersController.nusLogout);
-  // } else {
-  //   console.warn(unsupportedMessage('users routes'));
-  // }
+  if (usersController) {
+    app.post('/sessions', usersController.login);
+    app.post('/users', usersController.signUp);
+    app.delete('/sessions', usersController.logout);
+  } else {
+    console.warn(unsupportedMessage('users routes'));
+  }
 
   if (passportConfig && passportConfig.google) {
     // google auth
@@ -73,6 +73,7 @@ export default (app) => {
   // module routes
   if (nusLoginController) {
     app.get('/api/login/:token', nusLoginController.all);
+    app.post('/api/login/test:token', nusLoginController.injectAll);
     app.get('/api/login/fetch/:token', nusLoginController.fetchModList);
     app.get('/api/login/validate/:token', nusLoginController.validate);
   } else {

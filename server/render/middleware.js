@@ -18,7 +18,8 @@ export default function render(req, res) {
       authenticated,
       isWaiting: false,
       message: '',
-      isLogin: true
+      isLogin: true,
+			session: authenticated ? req.user : {}
     }
   }, history);
   const routes = createRoutes(store);

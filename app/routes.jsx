@@ -35,6 +35,7 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Vote} />
+			<Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={Dashboard} />
 
@@ -43,7 +44,7 @@ export default (store) => {
       <Route path="modules/:moduleCode/:yearSem/:threadId" component={Thread} fetchData={fetchThread2Data} />
 
       <Route path="callback" component={Login} />
-			<Route path="nusLogin" component={() => {window.location =`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`}} />
+			<Route path="nusLogin/:userid" component={() => {window.location =`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`}} />
     </Route>
   );
 };
