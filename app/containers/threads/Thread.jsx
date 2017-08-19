@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { browserHistory } from 'react-router';
 
 // Material UI
 import TextField from 'material-ui/TextField';
@@ -16,6 +16,7 @@ import { postCommentToThread, getArrayOfComments, postCommentToComment, updateCo
 
 // components
 import ThreadItem from './ThreadItem';
+import Comment from './Comment';
 
 // quill
 import QuillWrap from '../QuillWrap'
@@ -24,64 +25,6 @@ import QuillWrap from '../QuillWrap'
  *  i.e. We should keep this as the container that does the data-fetching
  *  and dispatching of actions if you decide to have any sub-components.
  */
-
-class Tail extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  handleCommentButton = () => {
-    const { handleToggle, comment, threadId } = this.props;
-    handleToggle({
-      type: "comment",
-      threadId,
-      ReplyTo: comment.Author,
-      ReplyToId: comment._id,
-    });
-  }
-
-  handleEdit = () => {
-    const { handleToggle, comment, threadId } = this.props;
-    handleToggle({
-      threadId,
-      type: "updateComment",
-      commentId: comment._id,
-      Body: comment.Body,
-    });
-  }
-
-  render() {
-    const { ReplyTo, Author, Body, DateCreated } = this.props.comment;
-    const { style } = this.props;
-
-    const nameAndDate = ({Author, DateCreated}) => {
-      return (
-        <div>
-          {Author}
-          <br/>
-          {DateCreated}
-        </div>
-      )
-    }
-
-    return (
-      <div style={style}>
-        <Card>
-          <CardText>
-            <div dangerouslySetInnerHTML={{__html: Body }} />
-          </CardText>
-          <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
-          <CardActions>
-            <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
-            <FlatButton label="Like" />
-            <FlatButton label="Edit" onTouchTap={this.handleEdit} />
-          </CardActions>
-        </Card>
-        {this.props.children}
-      </div>
-    )
-  }
-}
 
 class Head extends Component {
   constructor() {
@@ -116,13 +59,14 @@ class Head extends Component {
         return (
           commentsArray.map((comment) => {
             return (
-              <Tail
+              <Comment
                 style={style(size)}
                 comment={comment}
                 handleToggle={handleToggle}
                 threadId={threadId} >
+                handleOopsToggle={this.handleOopsToggle}
                 {recurseComments(comment.Comments, size+add, add, threadId)}
-              </Tail>
+              </Comment>
             )
           })
         )
@@ -159,7 +103,8 @@ class Thread extends Component {
         comment: {
           Body: null,
         }
-      }
+      },
+      oopsOpen: false,
     };
   }
   
@@ -223,7 +168,15 @@ class Thread extends Component {
     console.log(this.props.thread)
   }
 
+  handleOopsToggle = () => {
+    this.setState({oopsOpen: !this.state.oopsOpen})
+  }
+
   componentDidMount() {
+  }
+
+  pushLogin = () => {
+    browserHistory.push('/login')
   }
 
   render() {
@@ -242,8 +195,29 @@ class Thread extends Component {
       />,
     ]
 
+    const oopsActions = [
+      <RaisedButton
+        label="Login Or Register"
+        primary={true}
+        onTouchTap={this.pushLogin}
+      />,
+      <RaisedButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleOopsToggle}
+      />,
+    ]
+
     return (
       <div>
+        <Dialog
+          title="Oops! You have to login to do that!"
+          modal={true}
+          open={this.state.oopsOpen}
+          actions={oopsActions}
+          onRequestClose={this.handleOopsToggle}
+        />
+
         <Dialog
           title="Reply"
           modal={true}
@@ -257,7 +231,11 @@ class Thread extends Component {
         </Dialog>
         <div style={{textAlign: "center"}}>
         </div>
-        <Head thread={this.props.thread} handleToggle={this.handleToggle} threadId={threadId}/>
+        <Head
+          thread={this.props.thread}
+          handleToggle={this.handleToggle} threadId={threadId}
+          handleOopsToggle={this.handleOopsToggle}
+        />
       </div>
     )
   }

@@ -13,6 +13,7 @@ import mongoose from 'mongoose';
  */
 
 const UserSchema = new mongoose.Schema({
+  displayName: String,
   email: { type: String, unique: true, lowercase: true },
   password: String,
   tokens: Array,
