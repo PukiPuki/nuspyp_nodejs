@@ -78,7 +78,7 @@ export function signUp(data) {
     return authService().signUp(data)
       .then((response) => {
           dispatch(signUpSuccess('You have successfully registered an account!'));
-          dispatch(push('/'));
+          window.location = '/';
       })
       .catch((err) => {
         dispatch(signUpError('Oops! Something went wrong when signing up'));

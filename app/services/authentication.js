@@ -16,7 +16,7 @@ export default () => {
       method: 'POST',
       url: '/users',
       data: {
-        displayName,
+				displayName,
         email,
         password
       }
