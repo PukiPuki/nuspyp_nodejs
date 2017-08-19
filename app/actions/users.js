@@ -61,8 +61,9 @@ export function manualLogin(data) {
 
     return authService().login(data)
       .then((response) => {
+					console.log(response)
           dispatch(loginSuccess('You have been successfully logged in'));
-          dispatch(push('/'));
+          window.location = '/';
       })
       .catch((err) => {
         dispatch(loginError('Oops! Invalid username or password'));
