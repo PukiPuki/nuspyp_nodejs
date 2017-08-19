@@ -63,8 +63,8 @@ class Head extends Component {
                 style={style(size)}
                 comment={comment}
                 handleToggle={handleToggle}
+                handleOopsToggle={this.props.handleOopsToggle}
                 threadId={threadId} >
-                handleOopsToggle={this.handleOopsToggle}
                 {recurseComments(comment.Comments, size+add, add, threadId)}
               </Comment>
             )
