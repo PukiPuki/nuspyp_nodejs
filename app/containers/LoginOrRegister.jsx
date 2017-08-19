@@ -6,8 +6,60 @@ import { connect } from 'react-redux';
 import { manualLogin, signUp, toggleLoginMode } from '../actions/users';
 import styles from '../css/components/login';
 import hourGlassSvg from '../images/hourglass.svg';
-
 const cx = classNames.bind(styles);
+
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
+class myLoginOrRegister extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      register: false,
+      displayName: "",
+      email: "",
+      password: "",
+      }
+  }
+
+  render() {
+    const style = {
+      margin: 20,
+      padding: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    } 
+
+    return (
+      <div style={{textAlign: 'center'}}>
+        <Paper style={style} zDepth={1}>
+          
+          <Tabs>
+            <Tab label='login'>
+              <TextField hintText="Email" value={this.state.email} ></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} ></TextField><br/>
+            </Tab>
+
+            <Tab label='register'>
+              <TextField hintText="Display Name" value={this.state.displayName} ></TextField><br/>
+              <TextField hintText="Email" value={this.state.email} ></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} ></TextField><br/>
+            </Tab>
+          </Tabs>
+
+          <RaisedButton label="Submit" primary={true} fullWidth={true} ></RaisedButton>
+
+        </Paper>
+      </div>
+    )
+  }
+
+  // register vs login
+  //
+}
 
 class LoginOrRegister extends Component {
   constructor(props) {
@@ -130,4 +182,4 @@ function mapStateToProps({user}) {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(LoginOrRegister);
+export default connect(mapStateToProps, { manualLogin, signUp, toggleLoginMode })(myLoginOrRegister);
