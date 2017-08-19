@@ -149,14 +149,8 @@ class LoginOrRegister extends Component {
               <input
                 className={cx('button')}
                 type="submit"
-                value={isLogin ? 'Login' : 'Register'} />
+                value={isLogin ? 'Login': 'Register'} />
             </form>
-          </div>
-          <div className={cx('google-container')}>
-            <h1 className={cx('heading')}>Google Login Demo</h1>
-            <a
-              className={cx('button')}
-              href="/auth/google">Login with Google</a>
           </div>
         </div>
       </div>
