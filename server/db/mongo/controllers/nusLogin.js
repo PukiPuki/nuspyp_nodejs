@@ -65,9 +65,12 @@ https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=${ivle_api_key}&Token=${tok
 }
 
 export function injectAll(req, res, next) {
-	const token = req.params.token;
+	var token = req.params.token;
+	const user = req.user;
+	const userID = user._id;
 	validate(token).then((result) => {
 		if (result.success==true){
+			token = result.token;
 			function httpGet(url, callback){
 				const options = {
 					url : url,

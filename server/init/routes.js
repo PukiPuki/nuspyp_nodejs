@@ -73,8 +73,8 @@ export default (app) => {
 
   // module routes
   if (nusLoginController) {
+    app.post('/api/login/test/:token', nusLoginController.injectAll);
     app.get('/api/login/:token', nusLoginController.all);
-    app.post('/api/login/test:token', nusLoginController.injectAll);
     app.get('/api/login/fetch/:token', nusLoginController.fetchModList);
     app.get('/api/login/validate/:token', nusLoginController.validate);
   } else {
