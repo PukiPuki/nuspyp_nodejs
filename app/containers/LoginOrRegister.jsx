@@ -25,6 +25,37 @@ class myLoginOrRegister extends Component {
       }
   }
 
+	email = (e) => {
+		this.setState({email: e.target.value})
+	}
+
+	password = (e) => {
+		this.setState({password: e.target.value})
+	}
+
+	displayName = (e) => {
+		this.setState({displayName: e.target.value})
+	}
+
+  handleOnSubmit = (event) => {
+    event.preventDefault();
+
+    const { manualLogin, signUp, user: { isLogin } } = this.props;
+		const { email, password, displayName } = this.state;
+
+    if (this.state.register) {
+      signUp({ displayName, email, password });
+    } else {
+      manualLogin({ email, password });
+    }
+  }
+
+	changeTab = (e) => {
+		this.setState({
+			register: e,
+		})
+	}
+
   render() {
     const style = {
       margin: 20,
@@ -37,20 +68,22 @@ class myLoginOrRegister extends Component {
       <div style={{textAlign: 'center'}}>
         <Paper style={style} zDepth={1}>
           
-          <Tabs>
-            <Tab label='login'>
-              <TextField hintText="Email" value={this.state.email} ></TextField><br/>
-              <TextField hintText="Password" value={this.state.password} ></TextField><br/>
+          <Tabs 
+						value={this.state.register}
+						onChange={this.changeTab}>
+            <Tab label='login' value={false}>
+              <TextField hintText="Email" value={this.state.email} onChange={this.email} ></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} onChange={this.password}></TextField><br/>
             </Tab>
 
-            <Tab label='register'>
-              <TextField hintText="Display Name" value={this.state.displayName} ></TextField><br/>
-              <TextField hintText="Email" value={this.state.email} ></TextField><br/>
-              <TextField hintText="Password" value={this.state.password} ></TextField><br/>
+            <Tab label='register' value={true}>
+              <TextField hintText="Display Name" value={this.state.displayName} onChange={this.displayName} ></TextField><br/>
+              <TextField hintText="Email" value={this.state.email} onChange={this.email}></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} onChange={this.password}></TextField><br/>
             </Tab>
           </Tabs>
 
-          <RaisedButton label="Submit" primary={true} fullWidth={true} ></RaisedButton>
+          <RaisedButton label="Submit" primary={true} fullWidth={true} onTouchTap={this.handleOnSubmit}></RaisedButton>
 
         </Paper>
       </div>

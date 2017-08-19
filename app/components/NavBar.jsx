@@ -40,9 +40,6 @@ class NavBar extends React.Component {
 
   handleClose = () => this.setState({open: false});
 
-  loginButton = () => {
-    browserHistory.push('/nusLogin');
-  }
 
   homeButton() {
     browserHistory.push('/');
@@ -54,9 +51,11 @@ class NavBar extends React.Component {
 	}
 
 	getUserID = () => {
-		return (this.props.lapi.userid == undefined) 
+		console.log("USERID");
+		console.log(this.props.user);
+		return (!this.props.user.authenticated) 
 			? 'Not logged in'
-			: this.props.lapi.userid
+			: this.props.user.session.displayName
 	}
 
 	signButton = () => {
@@ -72,7 +71,6 @@ class NavBar extends React.Component {
 	}
 
 	reactLogout = (logOut) => {
-		console.log(logOut);
 		logOut();
 		browserHistory.push('/');
 		this.handleClose();
@@ -100,14 +98,13 @@ class NavBar extends React.Component {
       <div>
         <Drawer
           docked={false}
-        	width={200}
+        	width={250}
         	open={this.state.open}
         	onRequestChange={(open) => this.setState({open})}>
 					<Card>
 						<CardMedia 
 							overlay={
 								<div>
-									<Avatar style={{margin:5}}> P </Avatar>
 									<CardTitle 
 										title={this.getUserID()} 
 										titleColor={"white"}
