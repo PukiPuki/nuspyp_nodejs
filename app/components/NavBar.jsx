@@ -62,8 +62,8 @@ class NavBar extends React.Component {
 	signButton = () => {
 		return (this.props.lapi.userid == undefined)
 			? <a href = {`https://ivle.nus.edu.sg/api/login/?apikey=${ivle_api_key}&url=http://localhost:3000/callback`} > 
-				<MenuItem leftIcon={<SignIn />}> Sign In </MenuItem> </a>
-			: <MenuItem  leftIcon={<SignOut />} onTouchTap={this.handleClose}> Sign Out </MenuItem>
+				<MenuItem leftIcon={<SignIn />}> Fetch Modules </MenuItem> </a>
+			: ""  
 	}
 
 	reactLogin = () => {
