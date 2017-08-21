@@ -137,7 +137,7 @@ class Thread extends Component {
     }
   }
 
-  handleToggle = ({ type, ReplyTo, ReplyToId, threadId, commentId }) => {
+  handleToggle = ({ type, ReplyTo, ReplyToId, threadId, commentId, AuthorId }) => {
     this.setState({
       open: !this.state.open,
       createComment: {
@@ -148,6 +148,7 @@ class Thread extends Component {
           ReplyTo,
           ReplyToId,
           Author: "Derrick Chua",
+          AuthorId,
           Votes: 99,
           Comments: [],
           children: [],
