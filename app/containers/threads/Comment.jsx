@@ -9,7 +9,12 @@ class Comment extends Component {
   constructor(props) {
     super(props)
     console.log(this.props);
-    this.state = {Votes: []};
+    this.state = {
+      Votes: {
+        up: [],
+        down: [],
+      },
+    }
   }
 
   handleCommentButton = () => {
@@ -35,19 +40,39 @@ class Comment extends Component {
   }
 
   handleUp = () => {
-    const flip = this.props.flip;
-    const id = "jimmy"
-    if(this.state.Votes.find((e)=>id==e)) {
-      flip("You have already voted before!");
-      return
+    const flip = this.props.flip
+    const id = this.props.user.session._id
+    const funcUp = ({up, down}, id) => {
+      const upIdx = up.findIndex((e)=>(e==id))
+      const downIdx = down.findIndex((e)=>(e==id))
+      if(downIdx !== -1) {
+        down.splice(downIdx, 1)
+      } else if (upIdx == -1) {
+        up.push(id)
+      } else {
+        flip("you already up voted")
+      }
     }
-    const newArr = this.state.Votes.push(id)
+    funcUp(this.state.Votes, id)
     this.setState({Votes: this.state.Votes})
   }
 
   handleDown = () => {
-    const id = "jimmy"
-    const newArr = this.state.Votes.splice(this.state.Votes.findIndex((e)=>id==e),1)
+    const flip = this.props.flip
+    const id = this.props.user.session._id
+    const funcDown = ({up, down}, id) => {
+      const upIdx = up.findIndex((e)=>(e==id))
+      const downIdx = down.findIndex((e)=>(e==id))
+      if(upIdx !== -1) {
+        up.splice(upIdx, 1)
+      } else if (downIdx == -1) {
+        down.push(id)
+      } else {
+        flip("you already down voted")
+      }
+    }
+    funcDown(this.state.Votes, id)
+    console.log(this.state.Votes)
     this.setState({Votes: this.state.Votes})
   }
 
@@ -107,7 +132,7 @@ class Comment extends Component {
             {allowComment()}
             {allowEdit()}
             <div>
-              {this.state.Votes.length}number  
+              {this.state.Votes.up.length-this.state.Votes.down.length}number  
             </div>
           </CardActions>
         </Card>
