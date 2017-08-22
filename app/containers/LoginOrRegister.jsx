@@ -73,13 +73,13 @@ class myLoginOrRegister extends Component {
 						onChange={this.changeTab}>
             <Tab label='login' value={false}>
               <TextField hintText="Email" value={this.state.email} onChange={this.email} ></TextField><br/>
-              <TextField hintText="Password" value={this.state.password} onChange={this.password}></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} onChange={this.password} type='password'></TextField><br/>
             </Tab>
 
             <Tab label='register' value={true}>
               <TextField hintText="Display Name" value={this.state.displayName} onChange={this.displayName} ></TextField><br/>
               <TextField hintText="Email" value={this.state.email} onChange={this.email}></TextField><br/>
-              <TextField hintText="Password" value={this.state.password} onChange={this.password}></TextField><br/>
+              <TextField hintText="Password" value={this.state.password} onChange={this.password} type='password'></TextField><br/>
             </Tab>
           </Tabs>
 

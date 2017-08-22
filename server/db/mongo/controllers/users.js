@@ -35,6 +35,7 @@ export function logout(req, res) {
  */
 export function signUp(req, res, next) {
   const user = new User({
+		displayName: req.body.displayName,
     email: req.body.email,
     password: req.body.password
   });

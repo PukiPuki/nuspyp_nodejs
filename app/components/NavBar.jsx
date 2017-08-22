@@ -51,8 +51,6 @@ class NavBar extends React.Component {
 	}
 
 	getUserID = () => {
-		console.log("USERID");
-		console.log(this.props.user);
 		return (!this.props.user.authenticated) 
 			? 'Not logged in'
 			: this.props.user.session.displayName
