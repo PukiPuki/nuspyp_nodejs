@@ -92,3 +92,11 @@ export function updateComment({comment, threadId}) {
       })
   }
 }
+
+export function flip(message) {
+  console.log(message)
+  const data = { message, flip: true }
+  return (dispatch) => {
+    dispatch({type: types.FLIP, data });
+  }
+}

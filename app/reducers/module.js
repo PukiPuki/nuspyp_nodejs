@@ -91,6 +91,20 @@ const comments = (
   }
 }
 
+const snackStatus = (
+  state = [],
+  action
+) => {
+  switch(action.type) {
+    case types.FLIP:
+      console.log("action.data")
+      console.log(action.data)
+      if (action.data) return action.data;
+      return state;
+    default:
+      return state;
+  }
+}
 const moduleReducer = combineReducers({
   moduleList,
   modulefs,
@@ -98,6 +112,7 @@ const moduleReducer = combineReducers({
   thread,
   threads,
   comments,
+  snackStatus,
 })
 
 export default moduleReducer;

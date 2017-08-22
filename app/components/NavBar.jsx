@@ -21,6 +21,7 @@ import SignOut from 'material-ui/svg-icons/action/exit-to-app';
 import SignIn from 'material-ui/svg-icons/action/perm-identity';
 import Avatar from 'material-ui/Avatar';
 import {Card, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
+import SnackBar from 'material-ui/Snackbar';
 
 
 //Import IVLE API Key
@@ -121,6 +122,12 @@ class NavBar extends React.Component {
 						{loadMods(['ACC1002X'])}
 						{loadMods(this.props.lapi.mods)}
 					<Divider />
+            <FlatButton label="fcuik" onTouchTap={
+              () => {
+                console.log(this.props.snackStatus)
+              }
+            } />
+					<Divider />
         </Drawer>
 
 	  <AppBar
@@ -129,13 +136,18 @@ class NavBar extends React.Component {
 	    onLeftIconButtonTouchTap={this.handleToggle} 
 	    iconElementRight={<SearchBar />}>
 		</AppBar>
+    <SnackBar
+      open={true}
+      message={this.props.snackStatus.message}
+      autoHideDuration={4000} />
   </div>);
   }
 }
 
 function mapStateToProps(state){
 	return {
-		lapi: state.nusLogin.all
+		lapi: state.nusLogin.all,
+    snackStatus : state.module.snackStatus,
 	}
 }
 

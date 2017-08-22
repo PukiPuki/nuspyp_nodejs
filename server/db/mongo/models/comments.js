@@ -10,7 +10,7 @@ const CommentSchema = new mongoose.Schema({
   Author: String,
   AuthorId: mongoose.Schema.Types.ObjectId,
   Body: String,
-  Votes: Number,
+  Votes: [ mongoose.Schema.Types.ObjectId ],
   DateCreated: { type: Date, default: Date.now },
   Comments: [ mongoose.Schema.Types.ObjectId ],
   children: [ mongoose.Schema.Types.ObjectId ],

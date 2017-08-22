@@ -1,5 +1,7 @@
 export const ONE_THREAD_REQUEST_SUCCESS = 'ONE_THREAD_REQUEST_SUCCESS';
 
+export const FLIP = 'FLIP';
+
 export const LOADED = 'LOADED';
 export const LOADING = 'LOADING';
 
