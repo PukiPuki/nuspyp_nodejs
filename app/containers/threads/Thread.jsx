@@ -9,6 +9,10 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import UpvoteIcon from 'material-ui/svg-icons/navigation/arrow-upward';
+import DownvoteIcon from 'material-ui/svg-icons/navigation/arrow-downward';
+import IconButton from 'material-ui/IconButton';
+
 
 // actions
 import { postThread }  from '../../actions/modules';
@@ -82,8 +86,14 @@ class Head extends Component {
           </CardText> 
           <CardActions>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
-            <FlatButton label="Like" />
-          </CardActions>
+            <IconButton onTouchTap={this.handleUp}>
+							<UpvoteIcon />
+						</IconButton>
+            <IconButton onTouchTap={this.handleDown}>
+							<DownvoteIcon />
+						</IconButton>
+   
+			</CardActions>
         </Card>
 
         {recurseComments(thread.Comments,20,0,threadId)}

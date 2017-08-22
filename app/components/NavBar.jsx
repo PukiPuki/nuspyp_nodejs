@@ -121,13 +121,6 @@ class NavBar extends React.Component {
 					<Divider />
 						{loadMods(['ACC1002X'])}
 						{loadMods(this.props.lapi.mods)}
-					<Divider />
-            <FlatButton label="fcuik" onTouchTap={
-              () => {
-                console.log(this.props.snackStatus)
-              }
-            } />
-					<Divider />
         </Drawer>
 
 	  <AppBar

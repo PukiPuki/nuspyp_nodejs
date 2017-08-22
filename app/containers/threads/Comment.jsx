@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import UpvoteIcon from 'material-ui/svg-icons/navigation/arrow-upward';
+import DownvoteIcon from 'material-ui/svg-icons/navigation/arrow-downward';
+import IconButton from 'material-ui/IconButton';
 
 import { flip } from '../../actions/modules';
 
@@ -50,7 +53,7 @@ class Comment extends Component {
       } else if (upIdx == -1) {
         up.push(id)
       } else {
-        flip("you already up voted")
+        flip("You have already upvoted")
       }
     }
     funcUp(this.state.Votes, id)
@@ -68,7 +71,7 @@ class Comment extends Component {
       } else if (downIdx == -1) {
         down.push(id)
       } else {
-        flip("you already down voted")
+        flip("you have already downvoted")
       }
     }
     funcDown(this.state.Votes, id)
@@ -84,8 +87,9 @@ class Comment extends Component {
     const nameAndDate = ({Author, DateCreated}) => {
       return (
         <div>
-          {Author}<br/>
-          {DateCreated}
+          <b>{Author} 
+          <font size="1">    {this.state.Votes.up.length-this.state.Votes.down.length} points </font> </b>
+          <font size="2"> {" " + DateCreated.substring(0,10)} </font>
         </div>
       )
     }
@@ -103,16 +107,18 @@ class Comment extends Component {
         return (
           <div>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
-            <FlatButton label="Like" />
-            <FlatButton label="Up" onTouchTap={this.handleUp}/>
-            <FlatButton label="Down" onTouchTap={this.handleDown}/>
+            <IconButton onTouchTap={this.handleUp}>
+							<UpvoteIcon />
+						</IconButton>
+            <IconButton onTouchTap={this.handleDown}>
+							<DownvoteIcon />
+						</IconButton>
           </div>
         )
       } else {
         return (
           <div>
             <FlatButton label="Comment" onTouchTap={this.props.handleOopsToggle}/>
-            <FlatButton label="Like" onTouchTap={this.props.handleOopsToggle}/>
             <FlatButton label="Up" onTouchTap={this.props.handleOopsToggle}/>
             <FlatButton label="Down" onTouchTap={this.props.handleOopsToggle}/>
           </div>
@@ -124,15 +130,14 @@ class Comment extends Component {
     return (
       <div style={style}>
         <Card>
+          <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
           <CardText>
             <div dangerouslySetInnerHTML={{__html: Body }} />
           </CardText>
-          <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
           <CardActions>
             {allowComment()}
             {allowEdit()}
             <div>
-              {this.state.Votes.up.length-this.state.Votes.down.length}number  
             </div>
           </CardActions>
         </Card>
