@@ -21,6 +21,7 @@ import { postCommentToThread, getArrayOfComments, postCommentToComment, updateCo
 // components
 import ThreadItem from './ThreadItem';
 import Comment from './Comment';
+import { flip } from '../../actions/modules.js';
 
 // quill
 import QuillWrap from '../QuillWrap'
@@ -133,8 +134,16 @@ class Thread extends Component {
     const {
       postCommentToThread,
       postCommentToComment,
-      updateComment, } = this.props;
+      updateComment,
+      flip, } = this.props;
     const { createComment } = this.state;
+    this.setState({open: false});
+    const emptyMsg = "At least write something!";
+
+    if(createComment.comment.Body==null) {
+      flip(emptyMsg);
+      return
+    }
 
     switch (createComment.type) {
       case "thread":
@@ -267,4 +276,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment, updateComment })(Thread);
+export default connect(mapStateToProps, { postThread, postCommentToThread, getArrayOfComments, postCommentToComment, updateComment, flip })(Thread);

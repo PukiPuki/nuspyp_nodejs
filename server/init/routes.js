@@ -63,6 +63,7 @@ export default (app) => {
     app.post('/api/modules/:moduleCode/:yearSem', modulesController.postThread);
     app.post('/api/threads', modulesController.postCommentToThread);
     app.get('/api/threads/:threadId', modulesController.getThread2);
+    app.get('/api/latest/', modulesController.getLatestThreads);
     app.post('/api/comments', modulesController.postCommentToComment);
     app.put('/api/comments/:commentId', modulesController.updateComment);
     app.get('/api/papers/:ModuleCode/:Year/:Sem', modulesController.getPaper);

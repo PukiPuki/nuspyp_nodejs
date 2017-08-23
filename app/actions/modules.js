@@ -100,3 +100,9 @@ export function flip(message) {
     dispatch({type: types.FLIP, data });
   }
 }
+
+export function getLatestThreads() {
+  return (dispatch) => {
+    dispatch()
+  }
+}

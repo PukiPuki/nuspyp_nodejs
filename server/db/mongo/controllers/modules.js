@@ -212,6 +212,12 @@ export function getThread2(req, res) {
   })
 }
 
+export function getLatestThreads(req, res) {
+  Thread.find().sort({DateCreated: -1}).exec((err, threads) => {
+    return res.json(threads)
+  })
+}
+
 export default {
   all,
   getPapers,
@@ -222,4 +228,5 @@ export default {
   postCommentToComment,
   getPaper,
   updateComment,
+  getLatestThreads,
 };

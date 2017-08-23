@@ -64,6 +64,12 @@ export default () => {
         data
       })
     },
+    getLatestThreads: () => {
+      return client.request({
+        method: 'GET',
+        url: `/api/latest`,
+      })
+    },
   };
 };
 
