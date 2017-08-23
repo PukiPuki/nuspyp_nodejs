@@ -107,9 +107,27 @@ class Comment extends Component {
         return (
           <div>
             <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
+              {allowEdit()}
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <FlatButton label="Comment" onTouchTap={this.props.handleOopsToggle}/>
+              {allowEdit()}
+          </div>
+        )
+      }
+    }
+
+    const allowUpDown = () => {
+      if(user.authenticated) {
+        return (
+          <div>
             <IconButton onTouchTap={this.handleUp}>
 							<UpvoteIcon />
 						</IconButton>
+            <br />
             <IconButton onTouchTap={this.handleDown}>
 							<DownvoteIcon />
 						</IconButton>
@@ -118,9 +136,13 @@ class Comment extends Component {
       } else {
         return (
           <div>
-            <FlatButton label="Comment" onTouchTap={this.props.handleOopsToggle}/>
-            <FlatButton label="Up" onTouchTap={this.props.handleOopsToggle}/>
-            <FlatButton label="Down" onTouchTap={this.props.handleOopsToggle}/>
+            <IconButton onTouchTap={this.handleOopsToggle}>
+							<UpvoteIcon />
+						</IconButton>
+            <br />
+            <IconButton onTouchTap={this.handleOopsToggle}>
+							<DownvoteIcon />
+						</IconButton>
           </div>
         )
       }
@@ -130,16 +152,22 @@ class Comment extends Component {
     return (
       <div style={style}>
         <Card>
-          <CardTitle subtitle={nameAndDate({Author, DateCreated})} />
-          <CardText>
-            <div dangerouslySetInnerHTML={{__html: Body }} />
-          </CardText>
-          <CardActions>
-            {allowComment()}
-            {allowEdit()}
-            <div>
-            </div>
-          </CardActions>
+          <table>
+            <tr>
+              <td>
+                {allowUpDown()}
+              </td>
+              <td>
+                <CardTitle style={{margin:0,paddingBottom:0}}subtitle={nameAndDate({Author, DateCreated})} />
+                <CardText style={{margin:0,paddingTop:0,paddingBottom:0}}>
+                  <div dangerouslySetInnerHTML={{__html: Body }} />
+                </CardText>
+                <CardActions style={{margin:0,padding:0}}>
+                  {allowComment()}
+                </CardActions>
+              </td>
+          </tr>
+          </table>
         </Card>
 
         {this.props.children}

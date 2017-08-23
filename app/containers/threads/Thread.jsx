@@ -37,6 +37,8 @@ class Head extends Component {
   
   handleCommentButton = () => {
     const { thread, handleToggle, threadId } = this.props
+    console.log("props in head");
+    console.log(this.props);
     handleToggle({
       type: "thread",
       ReplyTo: thread.Author,
@@ -80,20 +82,29 @@ class Head extends Component {
     return(
       <div>
         <Card>
-          <CardTitle title={thread.Title} subtitle={thread.Author} />
-          <CardText>
-            <div dangerouslySetInnerHTML={{__html: thread.Body }} />
-          </CardText> 
-          <CardActions>
-            <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
-            <IconButton onTouchTap={this.handleUp}>
-							<UpvoteIcon />
-						</IconButton>
-            <IconButton onTouchTap={this.handleDown}>
-							<DownvoteIcon />
-						</IconButton>
-   
-			</CardActions>
+          <table>
+            <tr>
+              <td>
+                <IconButton onTouchTap={this.handleUp}>
+						    	<UpvoteIcon />
+						    </IconButton>
+                <br />
+                <IconButton onTouchTap={this.handleDown}>
+						    	<DownvoteIcon />
+						    </IconButton>
+              
+              </td>
+              <td>
+                <CardTitle title={thread.Title} subtitle={thread.Author} />
+                <CardText>
+                  <div dangerouslySetInnerHTML={{__html: thread.Body }} />
+                </CardText> 
+                <CardActions>
+                  <FlatButton label="Comment" onTouchTap={this.handleCommentButton}/>
+			          </CardActions>
+              </td>
+            </tr>
+          </table>
         </Card>
 
         {recurseComments(thread.Comments,20,0,threadId)}
@@ -118,21 +129,12 @@ class Thread extends Component {
     };
   }
   
-  handleId = () => {
-  }
-
   handleSubmit = () => {
     const {
       postCommentToThread,
       postCommentToComment,
       updateComment, } = this.props;
     const { createComment } = this.state;
-    
-    // console.log(createComment);
-    // const dummy = document.createElement('html')
-    // dummy.innerHTML = createComment.comment.Body;
-    // console.log(dummy);
-    // console.log(dummy.getElementsByTagName('img'));
 
     switch (createComment.type) {
       case "thread":
@@ -242,6 +244,7 @@ class Thread extends Component {
         </Dialog>
         <div style={{textAlign: "center"}}>
         </div>
+
         <Head
           thread={this.props.thread}
           handleToggle={this.handleToggle} threadId={threadId}

@@ -5,12 +5,20 @@
 import mongoose from 'mongoose';
 
 const CommentSchema = new mongoose.Schema({
+  ModuleCode: String,
+  Year: Number,
+  Sem: Number,
+  QuestionNumber: String,
+  Title: String,
   ReplyTo: String,
   ReplyToId: mongoose.Schema.Types.ObjectId,
   Author: String,
   AuthorId: mongoose.Schema.Types.ObjectId,
   Body: String,
-  Votes: [ mongoose.Schema.Types.ObjectId ],
+  Votes: {
+    up: mongoose.Schema.Types.ObjectId,
+    down: mongoose.Schema.Types.ObjectId,
+  },
   DateCreated: { type: Date, default: Date.now },
   Comments: [ mongoose.Schema.Types.ObjectId ],
   children: [ mongoose.Schema.Types.ObjectId ],
